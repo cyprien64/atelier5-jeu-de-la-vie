@@ -6,6 +6,9 @@
 #define WIDTH 20
 #define HEIGHT 12
 
+/* Nombre de générations affichées après la génération 0 */
+#define GENERATIONS 20
+
 /* Chaque cellule stocke 2 états :
    unité = état actuel (0/1), dizaine = état futur (0/1)
    0 : morte qui le reste, 1 : vivante qui va mourir,
@@ -21,6 +24,63 @@ bool cell_cur_state(int world[HEIGHT][WIDTH], int x, int y)
 bool cell_next_state(int world[HEIGHT][WIDTH], int x, int y)
 {
     return world[y][x] / 10 == 1;
+}
+
+/* Calcule l'état futur de la cellule (x, y) à partir de l'état ACTUEL
+   de ses 8 voisines, et l'écrit dans la dizaine sans toucher l'unité.
+   Monde torique : les bords se rejoignent grâce au modulo, ainsi le
+   planeur qui sort d'un côté réapparaît de l'autre au lieu de disparaître. */
+void cell_compute_next_state(int world[HEIGHT][WIDTH], int x, int y)
+{
+    int dx, dy, nx, ny;
+    int neighbors = 0;
+
+    for (dy = -1; dy <= 1; dy++) {
+        for (dx = -1; dx <= 1; dx++) {
+            if (dx != 0 || dy != 0) {
+                nx = (x + dx + WIDTH) % WIDTH;
+                ny = (y + dy + HEIGHT) % HEIGHT;
+                if (cell_cur_state(world, nx, ny)) {
+                    neighbors = neighbors + 1;
+                }
+            }
+        }
+    }
+
+    /* Règles de Conway : une vivante survit avec 2 ou 3 voisines,
+       une morte naît avec exactement 3 voisines, sinon morte */
+    if (neighbors == 3 || (cell_cur_state(world, x, y) && neighbors == 2)) {
+        world[y][x] = world[y][x] + 10;
+    }
+}
+
+/* Passage à la génération suivante en 2 phases
+   (boucles while pour suivre exactement le logigramme flow-c) */
+void next_generation(int world[HEIGHT][WIDTH])
+{
+    int x, y;
+
+    /* Phase 1 : calcul de l'état futur de toutes les cellules */
+    y = 0;
+    while (y < HEIGHT) {
+        x = 0;
+        while (x < WIDTH) {
+            cell_compute_next_state(world, x, y);
+            x = x + 1;
+        }
+        y = y + 1;
+    }
+
+    /* Phase 2 : le futur devient l'actuel (la dizaine passe à l'unité) */
+    y = 0;
+    while (y < HEIGHT) {
+        x = 0;
+        while (x < WIDTH) {
+            world[y][x] = cell_next_state(world, x, y);
+            x = x + 1;
+        }
+        y = y + 1;
+    }
 }
 
 /* Placement d'un bloc 2x2 (structure stable), coin haut-gauche en (x, y) */
@@ -76,12 +136,22 @@ int main(void)
 {
     /* Toutes les cellules sont mortes au départ */
     int world[HEIGHT][WIDTH] = {0};
+    int generation;
 
     /* Commenter une ligne pour désactiver la structure correspondante */
     add_block(world, 1, 1);
     add_blinker(world, 7, 1);
     add_glider(world, 12, 1);
 
-    display_world(world);
+    for (generation = 0; generation <= GENERATIONS; generation++) {
+        printf("\033[2J\033[H"); /* efface l'écran (code ANSI) */
+        printf("Génération %d\n", generation);
+        display_world(world);
+        if (generation < GENERATIONS) {
+            printf("Entrée : génération suivante\n");
+            getchar();
+            next_generation(world);
+        }
+    }
     return 0;
 }

@@ -1,0 +1,25 @@
+{
+  "title": "next_generation",
+  "blocks": [
+    {"kind": "simple", "id": "b_start", "node": {"id": "n_start", "type": "terminal", "terminalKind": "start", "text": "next_generation(world)"}},
+    {"kind": "simple", "id": "b_p1y0", "node": {"id": "n_p1y0", "type": "process", "text": "y = 0"}},
+    {"kind": "while", "id": "b_p1wy", "diamond": {"id": "n_p1wy", "type": "diamond", "text": "y < HEIGHT"}, "body": [
+      {"kind": "simple", "id": "b_p1x0", "node": {"id": "n_p1x0", "type": "process", "text": "x = 0"}},
+      {"kind": "while", "id": "b_p1wx", "diamond": {"id": "n_p1wx", "type": "diamond", "text": "x < WIDTH"}, "body": [
+        {"kind": "simple", "id": "b_p1c", "node": {"id": "n_p1c", "type": "process", "text": "cell_compute_next_state(world, x, y)"}},
+        {"kind": "simple", "id": "b_p1xi", "node": {"id": "n_p1xi", "type": "process", "text": "x = x + 1"}}
+      ]},
+      {"kind": "simple", "id": "b_p1yi", "node": {"id": "n_p1yi", "type": "process", "text": "y = y + 1"}}
+    ]},
+    {"kind": "simple", "id": "b_p2y0", "node": {"id": "n_p2y0", "type": "process", "text": "y = 0"}},
+    {"kind": "while", "id": "b_p2wy", "diamond": {"id": "n_p2wy", "type": "diamond", "text": "y < HEIGHT"}, "body": [
+      {"kind": "simple", "id": "b_p2x0", "node": {"id": "n_p2x0", "type": "process", "text": "x = 0"}},
+      {"kind": "while", "id": "b_p2wx", "diamond": {"id": "n_p2wx", "type": "diamond", "text": "x < WIDTH"}, "body": [
+        {"kind": "simple", "id": "b_p2a", "node": {"id": "n_p2a", "type": "process", "text": "world[y][x] = cell_next_state(world, x, y)"}},
+        {"kind": "simple", "id": "b_p2xi", "node": {"id": "n_p2xi", "type": "process", "text": "x = x + 1"}}
+      ]},
+      {"kind": "simple", "id": "b_p2yi", "node": {"id": "n_p2yi", "type": "process", "text": "y = y + 1"}}
+    ]},
+    {"kind": "simple", "id": "b_end", "node": {"id": "n_end", "type": "terminal", "terminalKind": "end", "text": "fin"}}
+  ]
+}
