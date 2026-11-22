@@ -1,9 +1,27 @@
 /* Atelier 5 - Jeu de la vie (ESME BA1) */
 #include <stdio.h>
+#include <stdbool.h>
 
 /* Dimensions du monde */
 #define WIDTH 20
 #define HEIGHT 12
+
+/* Chaque cellule stocke 2 états :
+   unité = état actuel (0/1), dizaine = état futur (0/1)
+   0 : morte qui le reste, 1 : vivante qui va mourir,
+   10 : va naître, 11 : vivante qui le reste */
+
+/* true si la cellule (x, y) est vivante actuellement (unité) */
+bool cell_cur_state(int world[HEIGHT][WIDTH], int x, int y)
+{
+    return world[y][x] % 10 == 1;
+}
+
+/* true si la cellule (x, y) sera vivante à la génération suivante (dizaine) */
+bool cell_next_state(int world[HEIGHT][WIDTH], int x, int y)
+{
+    return world[y][x] / 10 == 1;
+}
 
 /* Placement d'un bloc 2x2 (structure stable), coin haut-gauche en (x, y) */
 void add_block(int world[HEIGHT][WIDTH], int x, int y)
