@@ -1,0 +1,20 @@
+{
+  "title": "display_world",
+  "blocks": [
+    {"kind": "simple", "id": "b_start", "node": {"id": "n_start", "type": "terminal", "terminalKind": "start", "text": "display_world(world)"}},
+    {"kind": "simple", "id": "b_y0", "node": {"id": "n_y0", "type": "process", "text": "y = 0"}},
+    {"kind": "while", "id": "b_wy", "diamond": {"id": "n_wy", "type": "diamond", "text": "y < HEIGHT"}, "body": [
+      {"kind": "simple", "id": "b_x0", "node": {"id": "n_x0", "type": "process", "text": "x = 0"}},
+      {"kind": "while", "id": "b_wx", "diamond": {"id": "n_wx", "type": "diamond", "text": "x < WIDTH"}, "body": [
+        {"kind": "if", "id": "b_if", "diamond": {"id": "n_if", "type": "diamond", "text": "world[y][x] == 1"},
+         "junction": {"id": "n_ifj", "type": "junction", "text": ""},
+         "trueBranch": [{"kind": "simple", "id": "b_pv", "node": {"id": "n_pv", "type": "io", "text": "printf(\"#\")"}}],
+         "falseBranch": [{"kind": "simple", "id": "b_pm", "node": {"id": "n_pm", "type": "io", "text": "printf(\".\")"}}]},
+        {"kind": "simple", "id": "b_xi", "node": {"id": "n_xi", "type": "process", "text": "x = x + 1"}}
+      ]},
+      {"kind": "simple", "id": "b_nl", "node": {"id": "n_nl", "type": "io", "text": "printf(\"\\n\")"}},
+      {"kind": "simple", "id": "b_yi", "node": {"id": "n_yi", "type": "process", "text": "y = y + 1"}}
+    ]},
+    {"kind": "simple", "id": "b_end", "node": {"id": "n_end", "type": "terminal", "terminalKind": "end", "text": "fin"}}
+  ]
+}

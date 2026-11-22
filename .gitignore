@@ -1,0 +1,8 @@
+# Binaires et fichiers objets
+life
+a.out
+*.o
+*.exe
+
+# macOS
+.DS_Store
