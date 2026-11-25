@@ -1,157 +1,173 @@
-/* Atelier 5 - Jeu de la vie (ESME BA1) */
+/* Touché-coulé avec des avions (ESME BA1) : 1 joueur contre l'ordinateur */
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 
-/* Dimensions du monde */
-#define WIDTH 20
-#define HEIGHT 12
+/* Dimensions du ciel et nombre d'avions */
+#define SIZE 10
+#define NB_PLANES 3
 
-/* Nombre de générations affichées après la génération 0 */
-#define GENERATIONS 20
+/* Dimensions de la forme d'un avion */
+#define PLANE_W 5
+#define PLANE_H 4
 
-/* Chaque cellule stocke 2 états :
-   unité = état actuel (0/1), dizaine = état futur (0/1)
-   0 : morte qui le reste, 1 : vivante qui va mourir,
-   10 : va naître, 11 : vivante qui le reste */
+/* État d'un tir sur une case */
+#define NOT_SHOT 0
+#define MISS 1
+#define HIT 2
 
-/* true si la cellule (x, y) est vivante actuellement (unité) */
-bool cell_cur_state(int world[HEIGHT][WIDTH], int x, int y)
+/* Forme d'un avion, nez vers le haut : 'T' = tête, '#' = reste de l'avion */
+const char PLANE[PLANE_H][PLANE_W + 1] = {
+    "..T..",
+    "#####",
+    "..#..",
+    ".###."
+};
+
+/* true si un avion posé avec son coin haut-gauche en (x, y)
+   ne chevauche aucun autre avion */
+bool can_place(int sky[SIZE][SIZE], int x, int y)
 {
-    return world[y][x] % 10 == 1;
-}
+    int i, j;
 
-/* true si la cellule (x, y) sera vivante à la génération suivante (dizaine) */
-bool cell_next_state(int world[HEIGHT][WIDTH], int x, int y)
-{
-    return world[y][x] / 10 == 1;
-}
-
-/* Calcule l'état futur de la cellule (x, y) à partir de l'état ACTUEL
-   de ses 8 voisines, et l'écrit dans la dizaine sans toucher l'unité.
-   Monde torique : les bords se rejoignent grâce au modulo, ainsi le
-   planeur qui sort d'un côté réapparaît de l'autre au lieu de disparaître. */
-void cell_compute_next_state(int world[HEIGHT][WIDTH], int x, int y)
-{
-    int dx, dy, nx, ny;
-    int neighbors = 0;
-
-    for (dy = -1; dy <= 1; dy++) {
-        for (dx = -1; dx <= 1; dx++) {
-            if (dx != 0 || dy != 0) {
-                nx = (x + dx + WIDTH) % WIDTH;
-                ny = (y + dy + HEIGHT) % HEIGHT;
-                if (cell_cur_state(world, nx, ny)) {
-                    neighbors = neighbors + 1;
-                }
+    for (i = 0; i < PLANE_H; i++) {
+        for (j = 0; j < PLANE_W; j++) {
+            if (PLANE[i][j] != '.' && sky[y + i][x + j] != 0) {
+                return false;
             }
         }
     }
+    return true;
+}
 
-    /* Règles de Conway : une vivante survit avec 2 ou 3 voisines,
-       une morte naît avec exactement 3 voisines, sinon morte */
-    if (neighbors == 3 || (cell_cur_state(world, x, y) && neighbors == 2)) {
-        world[y][x] = world[y][x] + 10;
+/* Écrit le numéro de l'avion (1, 2, 3...) dans chacune de ses cases */
+void place_plane(int sky[SIZE][SIZE], int x, int y, int number)
+{
+    int i, j;
+
+    for (i = 0; i < PLANE_H; i++) {
+        for (j = 0; j < PLANE_W; j++) {
+            if (PLANE[i][j] != '.') {
+                sky[y + i][x + j] = number;
+            }
+        }
     }
 }
 
-/* Passage à la génération suivante en 2 phases
-   (boucles while pour suivre exactement le logigramme flow-c) */
-void next_generation(int world[HEIGHT][WIDTH])
+/* Place les avions au hasard et retient la position de chaque tête */
+void place_all_planes(int sky[SIZE][SIZE], int head_x[NB_PLANES], int head_y[NB_PLANES])
+{
+    int p, x, y;
+
+    for (p = 0; p < NB_PLANES; p++) {
+        /* On tire une position jusqu'à trouver une place libre */
+        do {
+            x = rand() % (SIZE - PLANE_W + 1);
+            y = rand() % (SIZE - PLANE_H + 1);
+        } while (!can_place(sky, x, y));
+
+        place_plane(sky, x, y, p + 1);
+        head_x[p] = x + 2; /* la tête est au milieu de la première ligne */
+        head_y[p] = y;
+    }
+}
+
+/* Affichage du ciel vu par le joueur :
+   '.' = pas tiré, 'o' = à l'eau, 'X' = touché, '#' = avion abattu */
+void display_sky(int sky[SIZE][SIZE], int shots[SIZE][SIZE], bool downed[NB_PLANES])
 {
     int x, y;
 
-    /* Phase 1 : calcul de l'état futur de toutes les cellules */
-    y = 0;
-    while (y < HEIGHT) {
-        x = 0;
-        while (x < WIDTH) {
-            cell_compute_next_state(world, x, y);
-            x = x + 1;
-        }
-        y = y + 1;
+    printf("\n   ");
+    for (x = 0; x < SIZE; x++) {
+        printf(" %c", 'A' + x);
     }
+    printf("\n");
 
-    /* Phase 2 : le futur devient l'actuel (la dizaine passe à l'unité) */
-    y = 0;
-    while (y < HEIGHT) {
-        x = 0;
-        while (x < WIDTH) {
-            world[y][x] = cell_next_state(world, x, y);
-            x = x + 1;
-        }
-        y = y + 1;
-    }
-}
-
-/* Placement d'un bloc 2x2 (structure stable), coin haut-gauche en (x, y) */
-void add_block(int world[HEIGHT][WIDTH], int x, int y)
-{
-    world[y][x] = 1;
-    world[y][x + 1] = 1;
-    world[y + 1][x] = 1;
-    world[y + 1][x + 1] = 1;
-}
-
-/* Placement d'un clignotant vertical de 3 cellules (oscillateur de période 2) */
-void add_blinker(int world[HEIGHT][WIDTH], int x, int y)
-{
-    world[y][x] = 1;
-    world[y + 1][x] = 1;
-    world[y + 2][x] = 1;
-}
-
-/* Placement d'un planeur (vaisseau) qui se déplace vers le bas à droite */
-void add_glider(int world[HEIGHT][WIDTH], int x, int y)
-{
-    world[y][x + 1] = 1;
-    world[y + 1][x + 2] = 1;
-    world[y + 2][x] = 1;
-    world[y + 2][x + 1] = 1;
-    world[y + 2][x + 2] = 1;
-}
-
-/* Affichage du monde : '#' = cellule vivante, '.' = cellule morte
-   (boucles while pour suivre exactement le logigramme flow-c) */
-void display_world(int world[HEIGHT][WIDTH])
-{
-    int x, y;
-
-    y = 0;
-    while (y < HEIGHT) {
-        x = 0;
-        while (x < WIDTH) {
-            if (world[y][x] == 1) {
-                printf("#");
+    for (y = 0; y < SIZE; y++) {
+        printf("%2d ", y + 1);
+        for (x = 0; x < SIZE; x++) {
+            if (shots[y][x] == HIT) {
+                printf(" X");
+            } else if (sky[y][x] != 0 && downed[sky[y][x] - 1]) {
+                printf(" #");
+            } else if (shots[y][x] == MISS) {
+                printf(" o");
             } else {
-                printf(".");
+                printf(" .");
             }
-            x = x + 1;
         }
         printf("\n");
-        y = y + 1;
     }
 }
 
 int main(void)
 {
-    /* Toutes les cellules sont mortes au départ */
-    int world[HEIGHT][WIDTH] = {0};
-    int generation;
+    /* Toutes les cases sont vides et non tirées au départ */
+    int sky[SIZE][SIZE] = {0};
+    int shots[SIZE][SIZE] = {0};
+    int head_x[NB_PLANES], head_y[NB_PLANES];
+    bool downed[NB_PLANES] = {false};
+    int nb_downed = 0;
+    int nb_shots = 0;
+    char line[32];
+    char letter;
+    int row, x, y, p;
 
-    /* Commenter une ligne pour désactiver la structure correspondante */
-    add_block(world, 1, 1);
-    add_blinker(world, 7, 1);
-    add_glider(world, 12, 1);
+    srand(time(NULL));
+    place_all_planes(sky, head_x, head_y);
 
-    for (generation = 0; generation <= GENERATIONS; generation++) {
-        printf("\033[2J\033[H"); /* efface l'écran (code ANSI) */
-        printf("Génération %d\n", generation);
-        display_world(world);
-        if (generation < GENERATIONS) {
-            printf("Entrée : génération suivante\n");
-            getchar();
-            next_generation(world);
+    printf("Touché-coulé avec des avions : %d avions sont cachés.\n", NB_PLANES);
+    printf("Touchez la tête (cabine) d'un avion pour l'abattre.\n");
+
+    while (nb_downed < NB_PLANES) {
+        display_sky(sky, shots, downed);
+        printf("Tir (ex. B5) : ");
+        if (fgets(line, sizeof(line), stdin) == NULL) {
+            printf("\nPartie interrompue.\n");
+            return 0;
+        }
+
+        /* Lecture d'une lettre puis d'un numéro de ligne */
+        if (sscanf(line, " %c%d", &letter, &row) != 2) {
+            printf("Saisie invalide : tapez une lettre puis un nombre (ex. B5).\n");
+            continue;
+        }
+        if (letter >= 'a' && letter <= 'z') {
+            letter = letter - 'a' + 'A';
+        }
+        x = letter - 'A';
+        y = row - 1;
+        if (x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
+            printf("Case hors du ciel : de A1 à %c%d.\n", 'A' + SIZE - 1, SIZE);
+            continue;
+        }
+        if (shots[y][x] != NOT_SHOT) {
+            printf("Case déjà visée.\n");
+            continue;
+        }
+
+        nb_shots = nb_shots + 1;
+        if (sky[y][x] == 0) {
+            shots[y][x] = MISS;
+            printf("À l'eau.\n");
+        } else {
+            shots[y][x] = HIT;
+            p = sky[y][x] - 1;
+            if (downed[p]) {
+                printf("Touché (avion déjà abattu).\n");
+            } else if (x == head_x[p] && y == head_y[p]) {
+                downed[p] = true;
+                nb_downed = nb_downed + 1;
+                printf("Abattu ! (%d/%d)\n", nb_downed, NB_PLANES);
+            } else {
+                printf("Touché !\n");
+            }
         }
     }
+
+    display_sky(sky, shots, downed);
+    printf("Bravo, les %d avions sont abattus en %d tirs.\n", NB_PLANES, nb_shots);
     return 0;
 }

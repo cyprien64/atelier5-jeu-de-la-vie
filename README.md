@@ -1,6 +1,6 @@
-# Atelier 5 - Jeu de la vie
+# Touché-coulé avec des avions
 
-Amorce du projet de groupe (ESME, Bachelor 1) : version classique du jeu de la vie de Conway en C.
+Projet de groupe (ESME, Bachelor 1) en C : un touché-coulé où l'on abat des avions au lieu de couler des bateaux.
 
 Groupe : Cyprien, Vianney, Swann, Thiruvanen.
 
@@ -8,11 +8,25 @@ Groupe : Cyprien, Vianney, Swann, Thiruvanen.
 
 ```bash
 make
-./life
+./avions
 ```
 
-## Contenu
+## Règles
 
-- `main.c` : le monde (`world[HEIGHT][WIDTH]`), les 3 structures (bloc stable, clignotant, planeur), l'affichage, les états des cellules (`cell_cur_state`, `cell_next_state`) et la génération en 2 phases (`cell_compute_next_state`, `next_generation`). Monde torique.
-- Appuyer sur Entrée pour passer à la génération suivante (20 générations).
-- `docs/logigrammes/*.json` : logigrammes à ouvrir dans [flow-c](https://labasse.github.io/flowc/) (bouton **Open**), puis **Save** pour obtenir le PNG.
+- L'ordinateur cache 3 avions dans un ciel de 10 x 10 cases (colonnes A à J, lignes 1 à 10).
+- Chaque avion a cette forme (nez vers le haut), les avions ne se chevauchent pas :
+
+```
+..T..   T = tête (cabine)
+#####
+..#..
+.###.
+```
+
+- Le joueur tire en tapant une case, par exemple `B5` :
+  - « À l'eau » : aucune case d'avion ;
+  - « Touché » : une case d'avion, mais pas la tête ;
+  - « Abattu » : la tête de l'avion est touchée, l'avion entier est révélé.
+- La partie est gagnée quand les 3 avions sont abattus.
+
+Affichage : `.` pas tiré, `o` à l'eau, `X` touché, `#` avion abattu.
