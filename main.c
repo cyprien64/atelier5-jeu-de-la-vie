@@ -9,7 +9,7 @@
    colonnes 15 à 29 = zone du joueur 2 */
 #define WIDTH 30
 #define HEIGHT 20
-#define HALF (WIDTH / 2)
+#define HALF (WIDTH / 2)   /* 15 : première colonne du joueur 2 */
 
 #define ACTIONS_PER_TURN 2
 #define WIN_POINTS 15
@@ -38,6 +38,8 @@
 #define BLINKER 1
 #define GLIDER 2
 
+/* Chaque structure = 3 chaînes (ses 3 lignes), '#' = cellule vivante.
+   STRUCT_SIZE + 1 : 3 caractères + le '\0' de fin de chaîne. */
 const char STRUCTURES[NB_STRUCTURES][STRUCT_SIZE][STRUCT_SIZE + 1] = {
     { "##.", "##.", "..." },   /* bloc (stable) */
     { ".#.", ".#.", ".#." },   /* clignotant (oscillateur) */
@@ -56,13 +58,13 @@ const char STRUCTURES[NB_STRUCTURES][STRUCT_SIZE][STRUCT_SIZE + 1] = {
 /* true si la cellule (x, y) est vivante actuellement (unité non nulle) */
 bool cell_cur_state(int world[HEIGHT][WIDTH], int x, int y)
 {
-    return world[y][x] % 10 != 0;
+    return world[y][x] % 10 != 0;   /* % 10 garde l'unité : 21 % 10 = 1 */
 }
 
 /* true si la cellule (x, y) sera vivante à la génération suivante (dizaine non nulle) */
 bool cell_next_state(int world[HEIGHT][WIDTH], int x, int y)
 {
-    return world[y][x] / 10 != 0;
+    return world[y][x] / 10 != 0;   /* division entière, garde la dizaine : 21 / 10 = 2 */
 }
 
 /* Propriétaire actuel de la case (x, y) : l'unité */
@@ -101,14 +103,19 @@ void cell_compute_next_state(int world[HEIGHT][WIDTH], int x, int y)
     bool alive = cell_cur_state(world, x, y);
     int next = EMPTY;
 
+    /* dx et dy vont de -1 à 1 : on parcourt le carré 3 x 3 autour de (x, y) */
     dy = -1;
     while (dy <= 1) {
         dx = -1;
         while (dx <= 1) {
-            if (dx != 0 || dy != 0) {
+            if (dx != 0 || dy != 0) {   /* on ne compte pas la case elle-même */
+                /* Monde torique : + WIDTH évite un modulo négatif.
+                   Ex. x = 0, dx = -1 : (0 - 1 + 30) % 30 = 29, la colonne de l'autre bord. */
                 nx = (x + dx + WIDTH) % WIDTH;
                 ny = (y + dy + HEIGHT) % HEIGHT;
+                /* On lit l'unité (état actuel), jamais la dizaine déjà calculée */
                 owner = cell_cur_owner(world, nx, ny);
+                /* n1 et n2 : voisines de chaque joueur (utile pour la couleur majoritaire) */
                 if (owner == PLAYER1) {
                     n1 = n1 + 1;
                 } else if (owner == PLAYER2) {
@@ -123,19 +130,25 @@ void cell_compute_next_state(int world[HEIGHT][WIDTH], int x, int y)
     /* Survie avec 2 ou 3 voisines : la cellule garde son propriétaire.
        Naissance avec exactement 3 voisines : elle prend la couleur majoritaire.
        Sinon : vide. */
+    /* Les règles comptent n1 + n2 : toutes les voisines, quelle que soit leur couleur */
     if (alive && (n1 + n2 == 2 || n1 + n2 == 3)) {
         next = cell_cur_owner(world, x, y);
     } else if (!alive && n1 + n2 == 3) {
+        /* 3 voisines : jamais d'égalité possible (3-0, 2-1, 1-2 ou 0-3) */
         if (n1 > n2) {
             next = PLAYER1;
         } else {
             next = PLAYER2;
         }
     }
+    /* On écrit le futur dans la dizaine sans toucher l'unité.
+       Ex. cellule du joueur 1 (1) qui deviendra au joueur 2 : 1 + 2 * 10 = 21 */
     world[y][x] = world[y][x] + next * 10;
 }
 
-/* Passage à la génération suivante en 2 phases */
+/* Passage à la génération suivante en 2 phases.
+   Pourquoi 2 phases ? Si on mettait à jour les cases une par une,
+   une case déjà modifiée fausserait le calcul de ses voisines. */
 void next_generation(int world[HEIGHT][WIDTH])
 {
     int x, y;
@@ -157,7 +170,7 @@ void next_generation(int world[HEIGHT][WIDTH])
         x = 0;
         while (x < WIDTH) {
             if (cell_next_state(world, x, y)) {
-                world[y][x] = cell_next_owner(world, x, y);
+                world[y][x] = cell_next_owner(world, x, y);   /* ex. 21 devient 2 */
             } else {
                 world[y][x] = EMPTY;
             }
@@ -170,7 +183,7 @@ void next_generation(int world[HEIGHT][WIDTH])
 /* Action « ajouter » : une cellule sur une case vide de sa propre zone */
 bool add_cell(int world[HEIGHT][WIDTH], int player, int x, int y)
 {
-    bool ok = false;
+    bool ok = false;   /* renvoie false si l'action est refusée : le joueur recommence */
 
     if (zone_owner(x) == player && world[y][x] == EMPTY) {
         world[y][x] = player;
@@ -184,6 +197,7 @@ bool kill_cell(int world[HEIGHT][WIDTH], int player, int x, int y)
 {
     bool ok = false;
 
+    /* Pas une case vide et pas une de ses propres cellules */
     if (world[y][x] != EMPTY && world[y][x] != player) {
         world[y][x] = EMPTY;
         ok = true;
@@ -199,6 +213,7 @@ bool structure_cell(int type, int player, int i, int j)
     if (player == PLAYER1) {
         alive = STRUCTURES[type][i][j] == '#';
     } else {
+        /* Miroir : on lit la ligne de droite à gauche (j = 0 lit la colonne 2) */
         alive = STRUCTURES[type][i][STRUCT_SIZE - 1 - j] == '#';
     }
     return alive;
@@ -212,12 +227,16 @@ bool place_structure(int world[HEIGHT][WIDTH], int player, int type, int x, int 
     int i, j;
     bool ok = true;
 
+    /* Refus si la structure dépasse de la grille, ou si sa première
+       ou sa dernière colonne n'est pas dans la zone du joueur */
     if (x + STRUCT_SIZE > WIDTH || y + STRUCT_SIZE > HEIGHT
         || zone_owner(x) != player || zone_owner(x + STRUCT_SIZE - 1) != player) {
         ok = false;
     }
 
-    /* Vérification : aucune cellule adverse sous la structure */
+    /* Vérification : aucune cellule adverse sous la structure.
+       « && ok » dans les while : on s'arrête dès qu'un problème est trouvé.
+       On vérifie tout AVANT de poser, pour ne jamais poser une structure à moitié. */
     i = 0;
     while (i < STRUCT_SIZE && ok) {
         j = 0;
@@ -258,6 +277,7 @@ int count_cells(int world[HEIGHT][WIDTH], int player, int zone)
     while (y < HEIGHT) {
         x = 0;
         while (x < WIDTH) {
+            /* La cellule est au joueur ET (on compte partout OU elle est dans la zone voulue) */
             if (world[y][x] == player && (zone == ALL_ZONES || zone_owner(x) == zone)) {
                 count = count + 1;
             }
@@ -287,7 +307,7 @@ int leader(int value1, int value2)
    un test plus bas remplace le résultat d'un test plus haut. */
 int check_winner(int score1, int score2, int cells1, int cells2, int round)
 {
-    int result = NO_WINNER;
+    int result = NO_WINNER;   /* NO_WINNER : la partie continue */
 
     if (round >= MAX_ROUNDS) {
         result = leader(cells1, cells2);
@@ -313,6 +333,7 @@ void init_world(int world[HEIGHT][WIDTH])
     place_structure(world, PLAYER1, BLOCK, 3, 3);
     place_structure(world, PLAYER1, BLINKER, 8, 8);
     place_structure(world, PLAYER1, GLIDER, 3, 13);
+    /* Joueur 2 : mêmes positions vues dans un miroir (WIDTH - x - 3) */
     place_structure(world, PLAYER2, BLOCK, WIDTH - 6, 3);
     place_structure(world, PLAYER2, BLINKER, WIDTH - 11, 8);
     place_structure(world, PLAYER2, GLIDER, WIDTH - 6, 13);
@@ -392,19 +413,21 @@ void display_result(int result, int score1, int score2)
 /* Lit un entier entre min et max, redemande tant que la saisie est invalide */
 int read_int(const char prompt[], int min, int max)
 {
-    int value = min - 1;
+    int value = min - 1;   /* valeur invalide pour entrer dans la boucle */
     int c;
 
     while (value < min || value > max) {
         printf("%s (%d-%d) : ", prompt, min, max);
+        /* scanf renvoie 1 s'il a lu un nombre ; sinon (ex. une lettre) la saisie est invalide */
         if (scanf("%d", &value) != 1) {
-            if (feof(stdin)) {
+            if (feof(stdin)) {   /* fin de l'entrée (Ctrl+D) : on quitte proprement */
                 printf("\nPartie interrompue.\n");
                 exit(0);
             }
             value = min - 1;
         }
-        /* On vide le reste de la ligne */
+        /* On vide le reste de la ligne, sinon une lettre resterait bloquée
+           et scanf échouerait en boucle */
         c = getchar();
         while (c != '\n' && c != EOF) {
             c = getchar();
@@ -433,9 +456,9 @@ void play_turn(int world[HEIGHT][WIDTH], int player, int round, int score1, int 
                "  3 : poser une structure  4 : passer\n");
         choice = read_int("Choix", ACTION_ADD, ACTION_PASS);
 
-        ok = true;
+        ok = true;   /* passer est toujours accepté */
         if (choice != ACTION_PASS) {
-            type = BLOCK;
+            type = BLOCK;   /* valeur par défaut, utilisée seulement pour l'action 3 */
             if (choice == ACTION_STRUCTURE) {
                 type = read_int("Structure 0 = bloc, 1 = clignotant, 2 = planeur", 0, NB_STRUCTURES - 1);
             }
@@ -451,7 +474,7 @@ void play_turn(int world[HEIGHT][WIDTH], int player, int round, int score1, int 
         }
 
         if (ok) {
-            action = action + 1;
+            action = action + 1;   /* on ne passe à l'action suivante que si elle a réussi */
         } else {
             printf("Action impossible ici, recommencez.\n");
         }
@@ -470,11 +493,12 @@ int main(void)
 
     init_world(world);
 
+    /* Boucle de partie : un passage = un tour complet des deux joueurs */
     while (result == NO_WINNER) {
         round = round + 1;
-        play_turn(world, PLAYER1, round, score1, score2);
-        next_generation(world);
-        play_turn(world, PLAYER2, round, score1, score2);
+        play_turn(world, PLAYER1, round, score1, score2);   /* 2 actions du joueur 1 */
+        next_generation(world);                             /* Conway fait évoluer la grille */
+        play_turn(world, PLAYER2, round, score1, score2);   /* 2 actions du joueur 2 */
         next_generation(world);
 
         /* 1 point par cellule à soi dans la zone adverse */
@@ -482,7 +506,7 @@ int main(void)
         score2 = score2 + count_cells(world, PLAYER2, PLAYER1);
         cells1 = count_cells(world, PLAYER1, ALL_ZONES);
         cells2 = count_cells(world, PLAYER2, ALL_ZONES);
-        result = check_winner(score1, score2, cells1, cells2, round);
+        result = check_winner(score1, score2, cells1, cells2, round);   /* la boucle s'arrête si quelqu'un gagne */
     }
 
     printf("\n");
