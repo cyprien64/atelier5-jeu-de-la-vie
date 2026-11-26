@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_286",
+   "id": "b_360",
    "node": {
-    "id": "n_285",
+    "id": "n_359",
     "type": "terminal",
     "text": "init_world(world)",
     "terminalKind": "start"
@@ -13,63 +13,63 @@
   },
   {
    "kind": "simple",
-   "id": "b_274",
+   "id": "b_348",
    "node": {
-    "id": "n_273",
+    "id": "n_347",
     "type": "process",
     "text": "place_structure(world, PLAYER1, BLOCK, 3, 3)"
    }
   },
   {
    "kind": "simple",
-   "id": "b_276",
+   "id": "b_350",
    "node": {
-    "id": "n_275",
+    "id": "n_349",
     "type": "process",
     "text": "place_structure(world, PLAYER1, BLINKER, 8, 8)"
    }
   },
   {
    "kind": "simple",
-   "id": "b_278",
+   "id": "b_352",
    "node": {
-    "id": "n_277",
+    "id": "n_351",
     "type": "process",
     "text": "place_structure(world, PLAYER1, GLIDER, 3, 13)"
    }
   },
   {
    "kind": "simple",
-   "id": "b_280",
+   "id": "b_354",
    "node": {
-    "id": "n_279",
+    "id": "n_353",
     "type": "process",
     "text": "place_structure(world, PLAYER2, BLOCK, WIDTH - 6, 3)"
    }
   },
   {
    "kind": "simple",
-   "id": "b_282",
+   "id": "b_356",
    "node": {
-    "id": "n_281",
+    "id": "n_355",
     "type": "process",
     "text": "place_structure(world, PLAYER2, BLINKER, WIDTH - 11, 8)"
    }
   },
   {
    "kind": "simple",
-   "id": "b_284",
+   "id": "b_358",
    "node": {
-    "id": "n_283",
+    "id": "n_357",
     "type": "process",
     "text": "place_structure(world, PLAYER2, GLIDER, WIDTH - 6, 13)"
    }
   },
   {
    "kind": "simple",
-   "id": "b_288",
+   "id": "b_362",
    "node": {
-    "id": "n_287",
+    "id": "n_361",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

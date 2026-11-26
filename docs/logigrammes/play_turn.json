@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_337",
+   "id": "b_411",
    "node": {
-    "id": "n_336",
+    "id": "n_410",
     "type": "terminal",
     "text": "play_turn(world, player, round, score1, score2)",
     "terminalKind": "start"
@@ -13,109 +13,109 @@
   },
   {
    "kind": "simple",
-   "id": "b_290",
+   "id": "b_364",
    "node": {
-    "id": "n_289",
+    "id": "n_363",
     "type": "process",
     "text": "action = 1"
    }
   },
   {
    "kind": "simple",
-   "id": "b_292",
+   "id": "b_366",
    "node": {
-    "id": "n_291",
+    "id": "n_365",
     "type": "io",
     "text": "printf(\"\\033[2J\\033[H\")"
    }
   },
   {
    "kind": "while",
-   "id": "b_334",
+   "id": "b_408",
    "diamond": {
-    "id": "n_335",
+    "id": "n_409",
     "type": "diamond",
     "text": "action <= ACTIONS_PER_TURN"
    },
    "body": [
     {
      "kind": "simple",
-     "id": "b_294",
+     "id": "b_368",
      "node": {
-      "id": "n_293",
+      "id": "n_367",
       "type": "io",
       "text": "display_scores(...) ; display_world(world)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_296",
+     "id": "b_370",
      "node": {
-      "id": "n_295",
+      "id": "n_369",
       "type": "io",
       "text": "afficher le joueur, l'action et le menu"
      }
     },
     {
      "kind": "simple",
-     "id": "b_298",
+     "id": "b_372",
      "node": {
-      "id": "n_297",
+      "id": "n_371",
       "type": "io",
       "text": "choice = read_int(\"Choix\", ACTION_ADD, ACTION_PASS)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_300",
+     "id": "b_374",
      "node": {
-      "id": "n_299",
+      "id": "n_373",
       "type": "process",
       "text": "ok = true"
      }
     },
     {
      "kind": "if",
-     "id": "b_324",
+     "id": "b_398",
      "diamond": {
-      "id": "n_325",
+      "id": "n_399",
       "type": "diamond",
       "text": "choice != ACTION_PASS"
      },
      "junction": {
-      "id": "n_326",
+      "id": "n_400",
       "type": "junction",
       "text": ""
      },
      "trueBranch": [
       {
        "kind": "simple",
-       "id": "b_302",
+       "id": "b_376",
        "node": {
-        "id": "n_301",
+        "id": "n_375",
         "type": "process",
         "text": "type = BLOCK"
        }
       },
       {
        "kind": "if",
-       "id": "b_305",
+       "id": "b_379",
        "diamond": {
-        "id": "n_306",
+        "id": "n_380",
         "type": "diamond",
         "text": "choice == ACTION_STRUCTURE"
        },
        "junction": {
-        "id": "n_307",
+        "id": "n_381",
         "type": "junction",
         "text": ""
        },
        "trueBranch": [
         {
          "kind": "simple",
-         "id": "b_304",
+         "id": "b_378",
          "node": {
-          "id": "n_303",
+          "id": "n_377",
           "type": "io",
           "text": "type = read_int(\"Structure ...\", 0, NB_STRUCTURES - 1)"
          }
@@ -125,41 +125,41 @@
       },
       {
        "kind": "simple",
-       "id": "b_309",
+       "id": "b_383",
        "node": {
-        "id": "n_308",
+        "id": "n_382",
         "type": "io",
         "text": "x = read_int(\"Colonne\", 0, WIDTH - 1)"
        }
       },
       {
        "kind": "simple",
-       "id": "b_311",
+       "id": "b_385",
        "node": {
-        "id": "n_310",
+        "id": "n_384",
         "type": "io",
         "text": "y = read_int(\"Ligne\", 0, HEIGHT - 1)"
        }
       },
       {
        "kind": "if",
-       "id": "b_321",
+       "id": "b_395",
        "diamond": {
-        "id": "n_322",
+        "id": "n_396",
         "type": "diamond",
         "text": "choice == ACTION_ADD"
        },
        "junction": {
-        "id": "n_323",
+        "id": "n_397",
         "type": "junction",
         "text": ""
        },
        "trueBranch": [
         {
          "kind": "simple",
-         "id": "b_313",
+         "id": "b_387",
          "node": {
-          "id": "n_312",
+          "id": "n_386",
           "type": "process",
           "text": "ok = add_cell(world, player, x, y)"
          }
@@ -168,23 +168,23 @@
        "falseBranch": [
         {
          "kind": "if",
-         "id": "b_318",
+         "id": "b_392",
          "diamond": {
-          "id": "n_319",
+          "id": "n_393",
           "type": "diamond",
           "text": "choice == ACTION_KILL"
          },
          "junction": {
-          "id": "n_320",
+          "id": "n_394",
           "type": "junction",
           "text": ""
          },
          "trueBranch": [
           {
            "kind": "simple",
-           "id": "b_315",
+           "id": "b_389",
            "node": {
-            "id": "n_314",
+            "id": "n_388",
             "type": "process",
             "text": "ok = kill_cell(world, player, x, y)"
            }
@@ -193,9 +193,9 @@
          "falseBranch": [
           {
            "kind": "simple",
-           "id": "b_317",
+           "id": "b_391",
            "node": {
-            "id": "n_316",
+            "id": "n_390",
             "type": "process",
             "text": "ok = place_structure(world, player, type, x, y)"
            }
@@ -209,23 +209,23 @@
     },
     {
      "kind": "if",
-     "id": "b_331",
+     "id": "b_405",
      "diamond": {
-      "id": "n_332",
+      "id": "n_406",
       "type": "diamond",
       "text": "ok"
      },
      "junction": {
-      "id": "n_333",
+      "id": "n_407",
       "type": "junction",
       "text": ""
      },
      "trueBranch": [
       {
        "kind": "simple",
-       "id": "b_328",
+       "id": "b_402",
        "node": {
-        "id": "n_327",
+        "id": "n_401",
         "type": "process",
         "text": "action = action + 1"
        }
@@ -234,9 +234,9 @@
      "falseBranch": [
       {
        "kind": "simple",
-       "id": "b_330",
+       "id": "b_404",
        "node": {
-        "id": "n_329",
+        "id": "n_403",
         "type": "io",
         "text": "printf(\"Action impossible ici, recommencez.\")"
        }
@@ -247,9 +247,9 @@
   },
   {
    "kind": "simple",
-   "id": "b_339",
+   "id": "b_413",
    "node": {
-    "id": "n_338",
+    "id": "n_412",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

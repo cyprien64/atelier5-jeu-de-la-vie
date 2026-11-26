@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_270",
+   "id": "b_344",
    "node": {
-    "id": "n_269",
+    "id": "n_343",
     "type": "terminal",
     "text": "check_winner(score1, score2, cells1, cells2, round)",
     "terminalKind": "start"
@@ -13,32 +13,32 @@
   },
   {
    "kind": "simple",
-   "id": "b_241",
+   "id": "b_315",
    "node": {
-    "id": "n_240",
+    "id": "n_314",
     "type": "process",
     "text": "result = NO_WINNER"
    }
   },
   {
    "kind": "if",
-   "id": "b_244",
+   "id": "b_318",
    "diamond": {
-    "id": "n_245",
+    "id": "n_319",
     "type": "diamond",
     "text": "round >= MAX_ROUNDS"
    },
    "junction": {
-    "id": "n_246",
+    "id": "n_320",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_243",
+     "id": "b_317",
      "node": {
-      "id": "n_242",
+      "id": "n_316",
       "type": "process",
       "text": "result = leader(cells1, cells2)"
      }
@@ -48,23 +48,23 @@
   },
   {
    "kind": "if",
-   "id": "b_249",
+   "id": "b_323",
    "diamond": {
-    "id": "n_250",
+    "id": "n_324",
     "type": "diamond",
     "text": "score1 >= WIN_POINTS || score2 >= WIN_POINTS"
    },
    "junction": {
-    "id": "n_251",
+    "id": "n_325",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_248",
+     "id": "b_322",
      "node": {
-      "id": "n_247",
+      "id": "n_321",
       "type": "process",
       "text": "result = leader(score1, score2)"
      }
@@ -74,23 +74,23 @@
   },
   {
    "kind": "if",
-   "id": "b_254",
+   "id": "b_328",
    "diamond": {
-    "id": "n_255",
+    "id": "n_329",
     "type": "diamond",
     "text": "cells2 == 0"
    },
    "junction": {
-    "id": "n_256",
+    "id": "n_330",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_253",
+     "id": "b_327",
      "node": {
-      "id": "n_252",
+      "id": "n_326",
       "type": "process",
       "text": "result = PLAYER1"
      }
@@ -100,23 +100,23 @@
   },
   {
    "kind": "if",
-   "id": "b_259",
+   "id": "b_333",
    "diamond": {
-    "id": "n_260",
+    "id": "n_334",
     "type": "diamond",
     "text": "cells1 == 0"
    },
    "junction": {
-    "id": "n_261",
+    "id": "n_335",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_258",
+     "id": "b_332",
      "node": {
-      "id": "n_257",
+      "id": "n_331",
       "type": "process",
       "text": "result = PLAYER2"
      }
@@ -126,23 +126,23 @@
   },
   {
    "kind": "if",
-   "id": "b_264",
+   "id": "b_338",
    "diamond": {
-    "id": "n_265",
+    "id": "n_339",
     "type": "diamond",
     "text": "cells1 == 0 && cells2 == 0"
    },
    "junction": {
-    "id": "n_266",
+    "id": "n_340",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_263",
+     "id": "b_337",
      "node": {
-      "id": "n_262",
+      "id": "n_336",
       "type": "process",
       "text": "result = DRAW"
      }
@@ -152,18 +152,18 @@
   },
   {
    "kind": "simple",
-   "id": "b_268",
+   "id": "b_342",
    "node": {
-    "id": "n_267",
+    "id": "n_341",
     "type": "process",
     "text": "return result"
    }
   },
   {
    "kind": "simple",
-   "id": "b_272",
+   "id": "b_346",
    "node": {
-    "id": "n_271",
+    "id": "n_345",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

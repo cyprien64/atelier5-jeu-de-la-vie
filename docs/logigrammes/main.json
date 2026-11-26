@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_373",
+   "id": "b_447",
    "node": {
-    "id": "n_372",
+    "id": "n_446",
     "type": "terminal",
     "text": "main()",
     "terminalKind": "start"
@@ -13,126 +13,126 @@
   },
   {
    "kind": "simple",
-   "id": "b_341",
+   "id": "b_415",
    "node": {
-    "id": "n_340",
+    "id": "n_414",
     "type": "process",
     "text": "world = {0} ; score1 = 0 ; score2 = 0 ; round = 0"
    }
   },
   {
    "kind": "simple",
-   "id": "b_343",
+   "id": "b_417",
    "node": {
-    "id": "n_342",
+    "id": "n_416",
     "type": "process",
     "text": "result = NO_WINNER"
    }
   },
   {
    "kind": "simple",
-   "id": "b_345",
+   "id": "b_419",
    "node": {
-    "id": "n_344",
+    "id": "n_418",
     "type": "process",
     "text": "init_world(world)"
    }
   },
   {
    "kind": "while",
-   "id": "b_366",
+   "id": "b_440",
    "diamond": {
-    "id": "n_367",
+    "id": "n_441",
     "type": "diamond",
     "text": "result == NO_WINNER"
    },
    "body": [
     {
      "kind": "simple",
-     "id": "b_347",
+     "id": "b_421",
      "node": {
-      "id": "n_346",
+      "id": "n_420",
       "type": "process",
       "text": "round = round + 1"
      }
     },
     {
      "kind": "simple",
-     "id": "b_349",
+     "id": "b_423",
      "node": {
-      "id": "n_348",
+      "id": "n_422",
       "type": "process",
       "text": "play_turn(world, PLAYER1, round, score1, score2)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_351",
+     "id": "b_425",
      "node": {
-      "id": "n_350",
+      "id": "n_424",
       "type": "process",
       "text": "next_generation(world)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_353",
+     "id": "b_427",
      "node": {
-      "id": "n_352",
+      "id": "n_426",
       "type": "process",
       "text": "play_turn(world, PLAYER2, round, score1, score2)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_355",
+     "id": "b_429",
      "node": {
-      "id": "n_354",
+      "id": "n_428",
       "type": "process",
       "text": "next_generation(world)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_357",
+     "id": "b_431",
      "node": {
-      "id": "n_356",
+      "id": "n_430",
       "type": "process",
       "text": "score1 = score1 + count_cells(world, PLAYER1, PLAYER2)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_359",
+     "id": "b_433",
      "node": {
-      "id": "n_358",
+      "id": "n_432",
       "type": "process",
       "text": "score2 = score2 + count_cells(world, PLAYER2, PLAYER1)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_361",
+     "id": "b_435",
      "node": {
-      "id": "n_360",
+      "id": "n_434",
       "type": "process",
       "text": "cells1 = count_cells(world, PLAYER1, ALL_ZONES)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_363",
+     "id": "b_437",
      "node": {
-      "id": "n_362",
+      "id": "n_436",
       "type": "process",
       "text": "cells2 = count_cells(world, PLAYER2, ALL_ZONES)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_365",
+     "id": "b_439",
      "node": {
-      "id": "n_364",
+      "id": "n_438",
       "type": "process",
       "text": "result = check_winner(score1, score2, cells1, cells2, round)"
      }
@@ -141,27 +141,27 @@
   },
   {
    "kind": "simple",
-   "id": "b_369",
+   "id": "b_443",
    "node": {
-    "id": "n_368",
+    "id": "n_442",
     "type": "io",
     "text": "display_world(world)"
    }
   },
   {
    "kind": "simple",
-   "id": "b_371",
+   "id": "b_445",
    "node": {
-    "id": "n_370",
+    "id": "n_444",
     "type": "io",
     "text": "display_result(result, score1, score2)"
    }
   },
   {
    "kind": "simple",
-   "id": "b_375",
+   "id": "b_449",
    "node": {
-    "id": "n_374",
+    "id": "n_448",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

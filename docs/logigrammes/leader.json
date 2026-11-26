@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_237",
+   "id": "b_311",
    "node": {
-    "id": "n_236",
+    "id": "n_310",
     "type": "terminal",
     "text": "leader(value1, value2)",
     "terminalKind": "start"
@@ -13,32 +13,32 @@
   },
   {
    "kind": "simple",
-   "id": "b_223",
+   "id": "b_297",
    "node": {
-    "id": "n_222",
+    "id": "n_296",
     "type": "process",
     "text": "result = DRAW"
    }
   },
   {
    "kind": "if",
-   "id": "b_226",
+   "id": "b_300",
    "diamond": {
-    "id": "n_227",
+    "id": "n_301",
     "type": "diamond",
     "text": "value1 > value2"
    },
    "junction": {
-    "id": "n_228",
+    "id": "n_302",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_225",
+     "id": "b_299",
      "node": {
-      "id": "n_224",
+      "id": "n_298",
       "type": "process",
       "text": "result = PLAYER1"
      }
@@ -48,23 +48,23 @@
   },
   {
    "kind": "if",
-   "id": "b_231",
+   "id": "b_305",
    "diamond": {
-    "id": "n_232",
+    "id": "n_306",
     "type": "diamond",
     "text": "value2 > value1"
    },
    "junction": {
-    "id": "n_233",
+    "id": "n_307",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_230",
+     "id": "b_304",
      "node": {
-      "id": "n_229",
+      "id": "n_303",
       "type": "process",
       "text": "result = PLAYER2"
      }
@@ -74,18 +74,18 @@
   },
   {
    "kind": "simple",
-   "id": "b_235",
+   "id": "b_309",
    "node": {
-    "id": "n_234",
+    "id": "n_308",
     "type": "process",
     "text": "return result"
    }
   },
   {
    "kind": "simple",
-   "id": "b_239",
+   "id": "b_313",
    "node": {
-    "id": "n_238",
+    "id": "n_312",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

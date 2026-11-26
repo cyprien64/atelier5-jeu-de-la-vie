@@ -53,14 +53,26 @@ const char STRUCTURES[NB_STRUCTURES][STRUCT_SIZE][STRUCT_SIZE + 1] = {
    (0 = vide, 1 = joueur 1, 2 = joueur 2).
    Ex. 21 : cellule du joueur 1 qui sera au joueur 2 à la génération suivante. */
 
+/* true si la cellule (x, y) est vivante actuellement (unité non nulle) */
+bool cell_cur_state(int world[HEIGHT][WIDTH], int x, int y)
+{
+    return world[y][x] % 10 != 0;
+}
+
+/* true si la cellule (x, y) sera vivante à la génération suivante (dizaine non nulle) */
+bool cell_next_state(int world[HEIGHT][WIDTH], int x, int y)
+{
+    return world[y][x] / 10 != 0;
+}
+
 /* Propriétaire actuel de la case (x, y) : l'unité */
-int cell_cur_state(int world[HEIGHT][WIDTH], int x, int y)
+int cell_cur_owner(int world[HEIGHT][WIDTH], int x, int y)
 {
     return world[y][x] % 10;
 }
 
 /* Propriétaire futur de la case (x, y) : la dizaine */
-int cell_next_state(int world[HEIGHT][WIDTH], int x, int y)
+int cell_next_owner(int world[HEIGHT][WIDTH], int x, int y)
 {
     return world[y][x] / 10;
 }
@@ -86,7 +98,7 @@ void cell_compute_next_state(int world[HEIGHT][WIDTH], int x, int y)
     int dx, dy, nx, ny, owner;
     int n1 = 0;
     int n2 = 0;
-    int current = cell_cur_state(world, x, y);
+    bool alive = cell_cur_state(world, x, y);
     int next = EMPTY;
 
     dy = -1;
@@ -96,7 +108,7 @@ void cell_compute_next_state(int world[HEIGHT][WIDTH], int x, int y)
             if (dx != 0 || dy != 0) {
                 nx = (x + dx + WIDTH) % WIDTH;
                 ny = (y + dy + HEIGHT) % HEIGHT;
-                owner = cell_cur_state(world, nx, ny);
+                owner = cell_cur_owner(world, nx, ny);
                 if (owner == PLAYER1) {
                     n1 = n1 + 1;
                 } else if (owner == PLAYER2) {
@@ -111,9 +123,9 @@ void cell_compute_next_state(int world[HEIGHT][WIDTH], int x, int y)
     /* Survie avec 2 ou 3 voisines : la cellule garde son propriétaire.
        Naissance avec exactement 3 voisines : elle prend la couleur majoritaire.
        Sinon : vide. */
-    if (current != EMPTY && (n1 + n2 == 2 || n1 + n2 == 3)) {
-        next = current;
-    } else if (current == EMPTY && n1 + n2 == 3) {
+    if (alive && (n1 + n2 == 2 || n1 + n2 == 3)) {
+        next = cell_cur_owner(world, x, y);
+    } else if (!alive && n1 + n2 == 3) {
         if (n1 > n2) {
             next = PLAYER1;
         } else {
@@ -144,7 +156,11 @@ void next_generation(int world[HEIGHT][WIDTH])
     while (y < HEIGHT) {
         x = 0;
         while (x < WIDTH) {
-            world[y][x] = cell_next_state(world, x, y);
+            if (cell_next_state(world, x, y)) {
+                world[y][x] = cell_next_owner(world, x, y);
+            } else {
+                world[y][x] = EMPTY;
+            }
             x = x + 1;
         }
         y = y + 1;

@@ -26,7 +26,7 @@
    "node": {
     "id": "n_16",
     "type": "process",
-    "text": "current = cell_cur_state(world, x, y)"
+    "text": "alive = cell_cur_state(world, x, y)"
    }
   },
   {
@@ -112,7 +112,7 @@
          "node": {
           "id": "n_28",
           "type": "process",
-          "text": "owner = cell_cur_state(world, nx, ny)"
+          "text": "owner = cell_cur_owner(world, nx, ny)"
          }
         },
         {
@@ -199,7 +199,7 @@
    "diamond": {
     "id": "n_64",
     "type": "diamond",
-    "text": "current != EMPTY && (n1 + n2 == 2 || n1 + n2 == 3)"
+    "text": "alive && (n1 + n2 == 2 || n1 + n2 == 3)"
    },
    "junction": {
     "id": "n_65",
@@ -213,7 +213,7 @@
      "node": {
       "id": "n_51",
       "type": "process",
-      "text": "next = current"
+      "text": "next = cell_cur_owner(world, x, y)"
      }
     }
    ],
@@ -224,7 +224,7 @@
      "diamond": {
       "id": "n_61",
       "type": "diamond",
-      "text": "current == EMPTY && n1 + n2 == 3"
+      "text": "!alive && n1 + n2 == 3"
      },
      "junction": {
       "id": "n_62",

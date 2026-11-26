@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_219",
+   "id": "b_293",
    "node": {
-    "id": "n_218",
+    "id": "n_292",
     "type": "terminal",
     "text": "count_cells(world, player, zone)",
     "terminalKind": "start"
@@ -13,68 +13,68 @@
   },
   {
    "kind": "simple",
-   "id": "b_198",
+   "id": "b_272",
    "node": {
-    "id": "n_197",
+    "id": "n_271",
     "type": "process",
     "text": "count = 0"
    }
   },
   {
    "kind": "simple",
-   "id": "b_205",
+   "id": "b_279",
    "node": {
-    "id": "n_204",
+    "id": "n_278",
     "type": "process",
     "text": "y = 0"
    }
   },
   {
    "kind": "while",
-   "id": "b_214",
+   "id": "b_288",
    "diamond": {
-    "id": "n_215",
+    "id": "n_289",
     "type": "diamond",
     "text": "y < HEIGHT"
    },
    "body": [
     {
      "kind": "simple",
-     "id": "b_207",
+     "id": "b_281",
      "node": {
-      "id": "n_206",
+      "id": "n_280",
       "type": "process",
       "text": "x = 0"
      }
     },
     {
      "kind": "while",
-     "id": "b_210",
+     "id": "b_284",
      "diamond": {
-      "id": "n_211",
+      "id": "n_285",
       "type": "diamond",
       "text": "x < WIDTH"
      },
      "body": [
       {
        "kind": "if",
-       "id": "b_201",
+       "id": "b_275",
        "diamond": {
-        "id": "n_202",
+        "id": "n_276",
         "type": "diamond",
         "text": "world[y][x] == player && (zone == ALL_ZONES || zone_owner(x) == zone)"
        },
        "junction": {
-        "id": "n_203",
+        "id": "n_277",
         "type": "junction",
         "text": ""
        },
        "trueBranch": [
         {
          "kind": "simple",
-         "id": "b_200",
+         "id": "b_274",
          "node": {
-          "id": "n_199",
+          "id": "n_273",
           "type": "process",
           "text": "count = count + 1"
          }
@@ -84,9 +84,9 @@
       },
       {
        "kind": "simple",
-       "id": "b_209",
+       "id": "b_283",
        "node": {
-        "id": "n_208",
+        "id": "n_282",
         "type": "process",
         "text": "x = x + 1"
        }
@@ -95,9 +95,9 @@
     },
     {
      "kind": "simple",
-     "id": "b_213",
+     "id": "b_287",
      "node": {
-      "id": "n_212",
+      "id": "n_286",
       "type": "process",
       "text": "y = y + 1"
      }
@@ -106,18 +106,18 @@
   },
   {
    "kind": "simple",
-   "id": "b_217",
+   "id": "b_291",
    "node": {
-    "id": "n_216",
+    "id": "n_290",
     "type": "process",
     "text": "return count"
    }
   },
   {
    "kind": "simple",
-   "id": "b_221",
+   "id": "b_295",
    "node": {
-    "id": "n_220",
+    "id": "n_294",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

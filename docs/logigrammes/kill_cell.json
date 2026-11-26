@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_131",
+   "id": "b_205",
    "node": {
-    "id": "n_130",
+    "id": "n_204",
     "type": "terminal",
     "text": "kill_cell(world, player, x, y)",
     "terminalKind": "start"
@@ -13,41 +13,41 @@
   },
   {
    "kind": "simple",
-   "id": "b_120",
+   "id": "b_194",
    "node": {
-    "id": "n_119",
+    "id": "n_193",
     "type": "process",
     "text": "ok = false"
    }
   },
   {
    "kind": "if",
-   "id": "b_125",
+   "id": "b_199",
    "diamond": {
-    "id": "n_126",
+    "id": "n_200",
     "type": "diamond",
     "text": "world[y][x] != EMPTY && world[y][x] != player"
    },
    "junction": {
-    "id": "n_127",
+    "id": "n_201",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_122",
+     "id": "b_196",
      "node": {
-      "id": "n_121",
+      "id": "n_195",
       "type": "process",
       "text": "world[y][x] = EMPTY"
      }
     },
     {
      "kind": "simple",
-     "id": "b_124",
+     "id": "b_198",
      "node": {
-      "id": "n_123",
+      "id": "n_197",
       "type": "process",
       "text": "ok = true"
      }
@@ -57,18 +57,18 @@
   },
   {
    "kind": "simple",
-   "id": "b_129",
+   "id": "b_203",
    "node": {
-    "id": "n_128",
+    "id": "n_202",
     "type": "process",
     "text": "return ok"
    }
   },
   {
    "kind": "simple",
-   "id": "b_133",
+   "id": "b_207",
    "node": {
-    "id": "n_132",
+    "id": "n_206",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

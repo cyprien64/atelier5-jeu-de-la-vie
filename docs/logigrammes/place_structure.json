@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_194",
+   "id": "b_268",
    "node": {
-    "id": "n_193",
+    "id": "n_267",
     "type": "terminal",
     "text": "place_structure(world, player, type, x, y)",
     "terminalKind": "start"
@@ -13,32 +13,32 @@
   },
   {
    "kind": "simple",
-   "id": "b_148",
+   "id": "b_222",
    "node": {
-    "id": "n_147",
+    "id": "n_221",
     "type": "process",
     "text": "ok = true"
    }
   },
   {
    "kind": "if",
-   "id": "b_151",
+   "id": "b_225",
    "diamond": {
-    "id": "n_152",
+    "id": "n_226",
     "type": "diamond",
     "text": "x + STRUCT_SIZE > WIDTH || y + STRUCT_SIZE > HEIGHT || zone_owner(x) != player || zone_owner(x + STRUCT_SIZE - 1) != player"
    },
    "junction": {
-    "id": "n_153",
+    "id": "n_227",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_150",
+     "id": "b_224",
      "node": {
-      "id": "n_149",
+      "id": "n_223",
       "type": "process",
       "text": "ok = false"
      }
@@ -48,59 +48,59 @@
   },
   {
    "kind": "simple",
-   "id": "b_155",
+   "id": "b_229",
    "node": {
-    "id": "n_154",
+    "id": "n_228",
     "type": "process",
     "text": "i = 0"
    }
   },
   {
    "kind": "while",
-   "id": "b_169",
+   "id": "b_243",
    "diamond": {
-    "id": "n_170",
+    "id": "n_244",
     "type": "diamond",
     "text": "i < STRUCT_SIZE && ok"
    },
    "body": [
     {
      "kind": "simple",
-     "id": "b_157",
+     "id": "b_231",
      "node": {
-      "id": "n_156",
+      "id": "n_230",
       "type": "process",
       "text": "j = 0"
      }
     },
     {
      "kind": "while",
-     "id": "b_165",
+     "id": "b_239",
      "diamond": {
-      "id": "n_166",
+      "id": "n_240",
       "type": "diamond",
       "text": "j < STRUCT_SIZE && ok"
      },
      "body": [
       {
        "kind": "if",
-       "id": "b_160",
+       "id": "b_234",
        "diamond": {
-        "id": "n_161",
+        "id": "n_235",
         "type": "diamond",
         "text": "structure_cell(type, player, i, j) && world[y + i][x + j] != EMPTY && world[y + i][x + j] != player"
        },
        "junction": {
-        "id": "n_162",
+        "id": "n_236",
         "type": "junction",
         "text": ""
        },
        "trueBranch": [
         {
          "kind": "simple",
-         "id": "b_159",
+         "id": "b_233",
          "node": {
-          "id": "n_158",
+          "id": "n_232",
           "type": "process",
           "text": "ok = false"
          }
@@ -110,9 +110,9 @@
       },
       {
        "kind": "simple",
-       "id": "b_164",
+       "id": "b_238",
        "node": {
-        "id": "n_163",
+        "id": "n_237",
         "type": "process",
         "text": "j = j + 1"
        }
@@ -121,9 +121,9 @@
     },
     {
      "kind": "simple",
-     "id": "b_168",
+     "id": "b_242",
      "node": {
-      "id": "n_167",
+      "id": "n_241",
       "type": "process",
       "text": "i = i + 1"
      }
@@ -132,73 +132,73 @@
   },
   {
    "kind": "if",
-   "id": "b_188",
+   "id": "b_262",
    "diamond": {
-    "id": "n_189",
+    "id": "n_263",
     "type": "diamond",
     "text": "ok"
    },
    "junction": {
-    "id": "n_190",
+    "id": "n_264",
     "type": "junction",
     "text": ""
    },
    "trueBranch": [
     {
      "kind": "simple",
-     "id": "b_172",
+     "id": "b_246",
      "node": {
-      "id": "n_171",
+      "id": "n_245",
       "type": "process",
       "text": "i = 0"
      }
     },
     {
      "kind": "while",
-     "id": "b_186",
+     "id": "b_260",
      "diamond": {
-      "id": "n_187",
+      "id": "n_261",
       "type": "diamond",
       "text": "i < STRUCT_SIZE"
      },
      "body": [
       {
        "kind": "simple",
-       "id": "b_174",
+       "id": "b_248",
        "node": {
-        "id": "n_173",
+        "id": "n_247",
         "type": "process",
         "text": "j = 0"
        }
       },
       {
        "kind": "while",
-       "id": "b_182",
+       "id": "b_256",
        "diamond": {
-        "id": "n_183",
+        "id": "n_257",
         "type": "diamond",
         "text": "j < STRUCT_SIZE"
        },
        "body": [
         {
          "kind": "if",
-         "id": "b_177",
+         "id": "b_251",
          "diamond": {
-          "id": "n_178",
+          "id": "n_252",
           "type": "diamond",
           "text": "structure_cell(type, player, i, j)"
          },
          "junction": {
-          "id": "n_179",
+          "id": "n_253",
           "type": "junction",
           "text": ""
          },
          "trueBranch": [
           {
            "kind": "simple",
-           "id": "b_176",
+           "id": "b_250",
            "node": {
-            "id": "n_175",
+            "id": "n_249",
             "type": "process",
             "text": "world[y + i][x + j] = player"
            }
@@ -208,9 +208,9 @@
         },
         {
          "kind": "simple",
-         "id": "b_181",
+         "id": "b_255",
          "node": {
-          "id": "n_180",
+          "id": "n_254",
           "type": "process",
           "text": "j = j + 1"
          }
@@ -219,9 +219,9 @@
       },
       {
        "kind": "simple",
-       "id": "b_185",
+       "id": "b_259",
        "node": {
-        "id": "n_184",
+        "id": "n_258",
         "type": "process",
         "text": "i = i + 1"
        }
@@ -233,18 +233,18 @@
   },
   {
    "kind": "simple",
-   "id": "b_192",
+   "id": "b_266",
    "node": {
-    "id": "n_191",
+    "id": "n_265",
     "type": "process",
     "text": "return ok"
    }
   },
   {
    "kind": "simple",
-   "id": "b_196",
+   "id": "b_270",
    "node": {
-    "id": "n_195",
+    "id": "n_269",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

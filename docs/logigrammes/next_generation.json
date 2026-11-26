@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_101",
+   "id": "b_106",
    "node": {
-    "id": "n_100",
+    "id": "n_105",
     "type": "terminal",
     "text": "next_generation(world)",
     "terminalKind": "start"
@@ -80,54 +80,81 @@
   },
   {
    "kind": "simple",
-   "id": "b_89",
+   "id": "b_94",
    "node": {
-    "id": "n_88",
+    "id": "n_93",
     "type": "process",
     "text": "y = 0"
    }
   },
   {
    "kind": "while",
-   "id": "b_98",
+   "id": "b_103",
    "diamond": {
-    "id": "n_99",
+    "id": "n_104",
     "type": "diamond",
     "text": "y < HEIGHT"
    },
    "body": [
     {
      "kind": "simple",
-     "id": "b_91",
+     "id": "b_96",
      "node": {
-      "id": "n_90",
+      "id": "n_95",
       "type": "process",
       "text": "x = 0"
      }
     },
     {
      "kind": "while",
-     "id": "b_94",
+     "id": "b_99",
      "diamond": {
-      "id": "n_95",
+      "id": "n_100",
       "type": "diamond",
       "text": "x < WIDTH"
      },
      "body": [
       {
-       "kind": "simple",
-       "id": "b_87",
-       "node": {
-        "id": "n_86",
-        "type": "process",
-        "text": "world[y][x] = cell_next_state(world, x, y)"
-       }
+       "kind": "if",
+       "id": "b_90",
+       "diamond": {
+        "id": "n_91",
+        "type": "diamond",
+        "text": "cell_next_state(world, x, y)"
+       },
+       "junction": {
+        "id": "n_92",
+        "type": "junction",
+        "text": ""
+       },
+       "trueBranch": [
+        {
+         "kind": "simple",
+         "id": "b_87",
+         "node": {
+          "id": "n_86",
+          "type": "process",
+          "text": "world[y][x] = cell_next_owner(world, x, y)"
+         }
+        }
+       ],
+       "falseBranch": [
+        {
+         "kind": "simple",
+         "id": "b_89",
+         "node": {
+          "id": "n_88",
+          "type": "process",
+          "text": "world[y][x] = EMPTY"
+         }
+        }
+       ]
       },
       {
        "kind": "simple",
-       "id": "b_93",
+       "id": "b_98",
        "node": {
-        "id": "n_92",
+        "id": "n_97",
         "type": "process",
         "text": "x = x + 1"
        }
@@ -136,9 +163,9 @@
     },
     {
      "kind": "simple",
-     "id": "b_97",
+     "id": "b_102",
      "node": {
-      "id": "n_96",
+      "id": "n_101",
       "type": "process",
       "text": "y = y + 1"
      }
@@ -147,9 +174,9 @@
   },
   {
    "kind": "simple",
-   "id": "b_103",
+   "id": "b_108",
    "node": {
-    "id": "n_102",
+    "id": "n_107",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"
