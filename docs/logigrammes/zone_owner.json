@@ -1,0 +1,70 @@
+{
+ "title": "zone_owner",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_11",
+   "node": {
+    "id": "n_10",
+    "type": "terminal",
+    "text": "zone_owner(x)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "if",
+   "id": "b_5",
+   "diamond": {
+    "id": "n_6",
+    "type": "diamond",
+    "text": "x < HALF"
+   },
+   "junction": {
+    "id": "n_7",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_2",
+     "node": {
+      "id": "n_1",
+      "type": "process",
+      "text": "owner = PLAYER1"
+     }
+    }
+   ],
+   "falseBranch": [
+    {
+     "kind": "simple",
+     "id": "b_4",
+     "node": {
+      "id": "n_3",
+      "type": "process",
+      "text": "owner = PLAYER2"
+     }
+    }
+   ]
+  },
+  {
+   "kind": "simple",
+   "id": "b_9",
+   "node": {
+    "id": "n_8",
+    "type": "process",
+    "text": "return owner"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_13",
+   "node": {
+    "id": "n_12",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

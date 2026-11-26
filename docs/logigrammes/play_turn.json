@@ -1,0 +1,259 @@
+{
+ "title": "play_turn",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_337",
+   "node": {
+    "id": "n_336",
+    "type": "terminal",
+    "text": "play_turn(world, player, round, score1, score2)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_290",
+   "node": {
+    "id": "n_289",
+    "type": "process",
+    "text": "action = 1"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_292",
+   "node": {
+    "id": "n_291",
+    "type": "io",
+    "text": "printf(\"\\033[2J\\033[H\")"
+   }
+  },
+  {
+   "kind": "while",
+   "id": "b_334",
+   "diamond": {
+    "id": "n_335",
+    "type": "diamond",
+    "text": "action <= ACTIONS_PER_TURN"
+   },
+   "body": [
+    {
+     "kind": "simple",
+     "id": "b_294",
+     "node": {
+      "id": "n_293",
+      "type": "io",
+      "text": "display_scores(...) ; display_world(world)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_296",
+     "node": {
+      "id": "n_295",
+      "type": "io",
+      "text": "afficher le joueur, l'action et le menu"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_298",
+     "node": {
+      "id": "n_297",
+      "type": "io",
+      "text": "choice = read_int(\"Choix\", ACTION_ADD, ACTION_PASS)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_300",
+     "node": {
+      "id": "n_299",
+      "type": "process",
+      "text": "ok = true"
+     }
+    },
+    {
+     "kind": "if",
+     "id": "b_324",
+     "diamond": {
+      "id": "n_325",
+      "type": "diamond",
+      "text": "choice != ACTION_PASS"
+     },
+     "junction": {
+      "id": "n_326",
+      "type": "junction",
+      "text": ""
+     },
+     "trueBranch": [
+      {
+       "kind": "simple",
+       "id": "b_302",
+       "node": {
+        "id": "n_301",
+        "type": "process",
+        "text": "type = BLOCK"
+       }
+      },
+      {
+       "kind": "if",
+       "id": "b_305",
+       "diamond": {
+        "id": "n_306",
+        "type": "diamond",
+        "text": "choice == ACTION_STRUCTURE"
+       },
+       "junction": {
+        "id": "n_307",
+        "type": "junction",
+        "text": ""
+       },
+       "trueBranch": [
+        {
+         "kind": "simple",
+         "id": "b_304",
+         "node": {
+          "id": "n_303",
+          "type": "io",
+          "text": "type = read_int(\"Structure ...\", 0, NB_STRUCTURES - 1)"
+         }
+        }
+       ],
+       "falseBranch": []
+      },
+      {
+       "kind": "simple",
+       "id": "b_309",
+       "node": {
+        "id": "n_308",
+        "type": "io",
+        "text": "x = read_int(\"Colonne\", 0, WIDTH - 1)"
+       }
+      },
+      {
+       "kind": "simple",
+       "id": "b_311",
+       "node": {
+        "id": "n_310",
+        "type": "io",
+        "text": "y = read_int(\"Ligne\", 0, HEIGHT - 1)"
+       }
+      },
+      {
+       "kind": "if",
+       "id": "b_321",
+       "diamond": {
+        "id": "n_322",
+        "type": "diamond",
+        "text": "choice == ACTION_ADD"
+       },
+       "junction": {
+        "id": "n_323",
+        "type": "junction",
+        "text": ""
+       },
+       "trueBranch": [
+        {
+         "kind": "simple",
+         "id": "b_313",
+         "node": {
+          "id": "n_312",
+          "type": "process",
+          "text": "ok = add_cell(world, player, x, y)"
+         }
+        }
+       ],
+       "falseBranch": [
+        {
+         "kind": "if",
+         "id": "b_318",
+         "diamond": {
+          "id": "n_319",
+          "type": "diamond",
+          "text": "choice == ACTION_KILL"
+         },
+         "junction": {
+          "id": "n_320",
+          "type": "junction",
+          "text": ""
+         },
+         "trueBranch": [
+          {
+           "kind": "simple",
+           "id": "b_315",
+           "node": {
+            "id": "n_314",
+            "type": "process",
+            "text": "ok = kill_cell(world, player, x, y)"
+           }
+          }
+         ],
+         "falseBranch": [
+          {
+           "kind": "simple",
+           "id": "b_317",
+           "node": {
+            "id": "n_316",
+            "type": "process",
+            "text": "ok = place_structure(world, player, type, x, y)"
+           }
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "falseBranch": []
+    },
+    {
+     "kind": "if",
+     "id": "b_331",
+     "diamond": {
+      "id": "n_332",
+      "type": "diamond",
+      "text": "ok"
+     },
+     "junction": {
+      "id": "n_333",
+      "type": "junction",
+      "text": ""
+     },
+     "trueBranch": [
+      {
+       "kind": "simple",
+       "id": "b_328",
+       "node": {
+        "id": "n_327",
+        "type": "process",
+        "text": "action = action + 1"
+       }
+      }
+     ],
+     "falseBranch": [
+      {
+       "kind": "simple",
+       "id": "b_330",
+       "node": {
+        "id": "n_329",
+        "type": "io",
+        "text": "printf(\"Action impossible ici, recommencez.\")"
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kind": "simple",
+   "id": "b_339",
+   "node": {
+    "id": "n_338",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

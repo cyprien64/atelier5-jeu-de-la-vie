@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
 
-avions: main.c
-	$(CC) $(CFLAGS) main.c -o avions
+conway_battle: main.c
+	$(CC) $(CFLAGS) main.c -o conway_battle
 
 clean:
-	rm -f avions
+	rm -f conway_battle

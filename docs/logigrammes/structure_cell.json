@@ -1,0 +1,70 @@
+{
+ "title": "structure_cell",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_144",
+   "node": {
+    "id": "n_143",
+    "type": "terminal",
+    "text": "structure_cell(type, player, i, j)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "if",
+   "id": "b_138",
+   "diamond": {
+    "id": "n_139",
+    "type": "diamond",
+    "text": "player == PLAYER1"
+   },
+   "junction": {
+    "id": "n_140",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_135",
+     "node": {
+      "id": "n_134",
+      "type": "process",
+      "text": "alive = STRUCTURES[type][i][j] == '#'"
+     }
+    }
+   ],
+   "falseBranch": [
+    {
+     "kind": "simple",
+     "id": "b_137",
+     "node": {
+      "id": "n_136",
+      "type": "process",
+      "text": "alive = STRUCTURES[type][i][STRUCT_SIZE - 1 - j] == '#'"
+     }
+    }
+   ]
+  },
+  {
+   "kind": "simple",
+   "id": "b_142",
+   "node": {
+    "id": "n_141",
+    "type": "process",
+    "text": "return alive"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_146",
+   "node": {
+    "id": "n_145",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

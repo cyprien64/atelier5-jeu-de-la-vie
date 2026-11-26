@@ -1,0 +1,173 @@
+{
+ "title": "check_winner",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_270",
+   "node": {
+    "id": "n_269",
+    "type": "terminal",
+    "text": "check_winner(score1, score2, cells1, cells2, round)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_241",
+   "node": {
+    "id": "n_240",
+    "type": "process",
+    "text": "result = NO_WINNER"
+   }
+  },
+  {
+   "kind": "if",
+   "id": "b_244",
+   "diamond": {
+    "id": "n_245",
+    "type": "diamond",
+    "text": "round >= MAX_ROUNDS"
+   },
+   "junction": {
+    "id": "n_246",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_243",
+     "node": {
+      "id": "n_242",
+      "type": "process",
+      "text": "result = leader(cells1, cells2)"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "if",
+   "id": "b_249",
+   "diamond": {
+    "id": "n_250",
+    "type": "diamond",
+    "text": "score1 >= WIN_POINTS || score2 >= WIN_POINTS"
+   },
+   "junction": {
+    "id": "n_251",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_248",
+     "node": {
+      "id": "n_247",
+      "type": "process",
+      "text": "result = leader(score1, score2)"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "if",
+   "id": "b_254",
+   "diamond": {
+    "id": "n_255",
+    "type": "diamond",
+    "text": "cells2 == 0"
+   },
+   "junction": {
+    "id": "n_256",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_253",
+     "node": {
+      "id": "n_252",
+      "type": "process",
+      "text": "result = PLAYER1"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "if",
+   "id": "b_259",
+   "diamond": {
+    "id": "n_260",
+    "type": "diamond",
+    "text": "cells1 == 0"
+   },
+   "junction": {
+    "id": "n_261",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_258",
+     "node": {
+      "id": "n_257",
+      "type": "process",
+      "text": "result = PLAYER2"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "if",
+   "id": "b_264",
+   "diamond": {
+    "id": "n_265",
+    "type": "diamond",
+    "text": "cells1 == 0 && cells2 == 0"
+   },
+   "junction": {
+    "id": "n_266",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_263",
+     "node": {
+      "id": "n_262",
+      "type": "process",
+      "text": "result = DRAW"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "simple",
+   "id": "b_268",
+   "node": {
+    "id": "n_267",
+    "type": "process",
+    "text": "return result"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_272",
+   "node": {
+    "id": "n_271",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

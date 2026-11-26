@@ -1,0 +1,171 @@
+{
+ "title": "main",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_373",
+   "node": {
+    "id": "n_372",
+    "type": "terminal",
+    "text": "main()",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_341",
+   "node": {
+    "id": "n_340",
+    "type": "process",
+    "text": "world = {0} ; score1 = 0 ; score2 = 0 ; round = 0"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_343",
+   "node": {
+    "id": "n_342",
+    "type": "process",
+    "text": "result = NO_WINNER"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_345",
+   "node": {
+    "id": "n_344",
+    "type": "process",
+    "text": "init_world(world)"
+   }
+  },
+  {
+   "kind": "while",
+   "id": "b_366",
+   "diamond": {
+    "id": "n_367",
+    "type": "diamond",
+    "text": "result == NO_WINNER"
+   },
+   "body": [
+    {
+     "kind": "simple",
+     "id": "b_347",
+     "node": {
+      "id": "n_346",
+      "type": "process",
+      "text": "round = round + 1"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_349",
+     "node": {
+      "id": "n_348",
+      "type": "process",
+      "text": "play_turn(world, PLAYER1, round, score1, score2)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_351",
+     "node": {
+      "id": "n_350",
+      "type": "process",
+      "text": "next_generation(world)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_353",
+     "node": {
+      "id": "n_352",
+      "type": "process",
+      "text": "play_turn(world, PLAYER2, round, score1, score2)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_355",
+     "node": {
+      "id": "n_354",
+      "type": "process",
+      "text": "next_generation(world)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_357",
+     "node": {
+      "id": "n_356",
+      "type": "process",
+      "text": "score1 = score1 + count_cells(world, PLAYER1, PLAYER2)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_359",
+     "node": {
+      "id": "n_358",
+      "type": "process",
+      "text": "score2 = score2 + count_cells(world, PLAYER2, PLAYER1)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_361",
+     "node": {
+      "id": "n_360",
+      "type": "process",
+      "text": "cells1 = count_cells(world, PLAYER1, ALL_ZONES)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_363",
+     "node": {
+      "id": "n_362",
+      "type": "process",
+      "text": "cells2 = count_cells(world, PLAYER2, ALL_ZONES)"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_365",
+     "node": {
+      "id": "n_364",
+      "type": "process",
+      "text": "result = check_winner(score1, score2, cells1, cells2, round)"
+     }
+    }
+   ]
+  },
+  {
+   "kind": "simple",
+   "id": "b_369",
+   "node": {
+    "id": "n_368",
+    "type": "io",
+    "text": "display_world(world)"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_371",
+   "node": {
+    "id": "n_370",
+    "type": "io",
+    "text": "display_result(result, score1, score2)"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_375",
+   "node": {
+    "id": "n_374",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

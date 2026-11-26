@@ -1,0 +1,254 @@
+{
+ "title": "place_structure",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_194",
+   "node": {
+    "id": "n_193",
+    "type": "terminal",
+    "text": "place_structure(world, player, type, x, y)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_148",
+   "node": {
+    "id": "n_147",
+    "type": "process",
+    "text": "ok = true"
+   }
+  },
+  {
+   "kind": "if",
+   "id": "b_151",
+   "diamond": {
+    "id": "n_152",
+    "type": "diamond",
+    "text": "x + STRUCT_SIZE > WIDTH || y + STRUCT_SIZE > HEIGHT || zone_owner(x) != player || zone_owner(x + STRUCT_SIZE - 1) != player"
+   },
+   "junction": {
+    "id": "n_153",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_150",
+     "node": {
+      "id": "n_149",
+      "type": "process",
+      "text": "ok = false"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "simple",
+   "id": "b_155",
+   "node": {
+    "id": "n_154",
+    "type": "process",
+    "text": "i = 0"
+   }
+  },
+  {
+   "kind": "while",
+   "id": "b_169",
+   "diamond": {
+    "id": "n_170",
+    "type": "diamond",
+    "text": "i < STRUCT_SIZE && ok"
+   },
+   "body": [
+    {
+     "kind": "simple",
+     "id": "b_157",
+     "node": {
+      "id": "n_156",
+      "type": "process",
+      "text": "j = 0"
+     }
+    },
+    {
+     "kind": "while",
+     "id": "b_165",
+     "diamond": {
+      "id": "n_166",
+      "type": "diamond",
+      "text": "j < STRUCT_SIZE && ok"
+     },
+     "body": [
+      {
+       "kind": "if",
+       "id": "b_160",
+       "diamond": {
+        "id": "n_161",
+        "type": "diamond",
+        "text": "structure_cell(type, player, i, j) && world[y + i][x + j] != EMPTY && world[y + i][x + j] != player"
+       },
+       "junction": {
+        "id": "n_162",
+        "type": "junction",
+        "text": ""
+       },
+       "trueBranch": [
+        {
+         "kind": "simple",
+         "id": "b_159",
+         "node": {
+          "id": "n_158",
+          "type": "process",
+          "text": "ok = false"
+         }
+        }
+       ],
+       "falseBranch": []
+      },
+      {
+       "kind": "simple",
+       "id": "b_164",
+       "node": {
+        "id": "n_163",
+        "type": "process",
+        "text": "j = j + 1"
+       }
+      }
+     ]
+    },
+    {
+     "kind": "simple",
+     "id": "b_168",
+     "node": {
+      "id": "n_167",
+      "type": "process",
+      "text": "i = i + 1"
+     }
+    }
+   ]
+  },
+  {
+   "kind": "if",
+   "id": "b_188",
+   "diamond": {
+    "id": "n_189",
+    "type": "diamond",
+    "text": "ok"
+   },
+   "junction": {
+    "id": "n_190",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_172",
+     "node": {
+      "id": "n_171",
+      "type": "process",
+      "text": "i = 0"
+     }
+    },
+    {
+     "kind": "while",
+     "id": "b_186",
+     "diamond": {
+      "id": "n_187",
+      "type": "diamond",
+      "text": "i < STRUCT_SIZE"
+     },
+     "body": [
+      {
+       "kind": "simple",
+       "id": "b_174",
+       "node": {
+        "id": "n_173",
+        "type": "process",
+        "text": "j = 0"
+       }
+      },
+      {
+       "kind": "while",
+       "id": "b_182",
+       "diamond": {
+        "id": "n_183",
+        "type": "diamond",
+        "text": "j < STRUCT_SIZE"
+       },
+       "body": [
+        {
+         "kind": "if",
+         "id": "b_177",
+         "diamond": {
+          "id": "n_178",
+          "type": "diamond",
+          "text": "structure_cell(type, player, i, j)"
+         },
+         "junction": {
+          "id": "n_179",
+          "type": "junction",
+          "text": ""
+         },
+         "trueBranch": [
+          {
+           "kind": "simple",
+           "id": "b_176",
+           "node": {
+            "id": "n_175",
+            "type": "process",
+            "text": "world[y + i][x + j] = player"
+           }
+          }
+         ],
+         "falseBranch": []
+        },
+        {
+         "kind": "simple",
+         "id": "b_181",
+         "node": {
+          "id": "n_180",
+          "type": "process",
+          "text": "j = j + 1"
+         }
+        }
+       ]
+      },
+      {
+       "kind": "simple",
+       "id": "b_185",
+       "node": {
+        "id": "n_184",
+        "type": "process",
+        "text": "i = i + 1"
+       }
+      }
+     ]
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "simple",
+   "id": "b_192",
+   "node": {
+    "id": "n_191",
+    "type": "process",
+    "text": "return ok"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_196",
+   "node": {
+    "id": "n_195",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

@@ -1,0 +1,78 @@
+{
+ "title": "add_cell",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_116",
+   "node": {
+    "id": "n_115",
+    "type": "terminal",
+    "text": "add_cell(world, player, x, y)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_105",
+   "node": {
+    "id": "n_104",
+    "type": "process",
+    "text": "ok = false"
+   }
+  },
+  {
+   "kind": "if",
+   "id": "b_110",
+   "diamond": {
+    "id": "n_111",
+    "type": "diamond",
+    "text": "zone_owner(x) == player && world[y][x] == EMPTY"
+   },
+   "junction": {
+    "id": "n_112",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_107",
+     "node": {
+      "id": "n_106",
+      "type": "process",
+      "text": "world[y][x] = player"
+     }
+    },
+    {
+     "kind": "simple",
+     "id": "b_109",
+     "node": {
+      "id": "n_108",
+      "type": "process",
+      "text": "ok = true"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "simple",
+   "id": "b_114",
+   "node": {
+    "id": "n_113",
+    "type": "process",
+    "text": "return ok"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_118",
+   "node": {
+    "id": "n_117",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

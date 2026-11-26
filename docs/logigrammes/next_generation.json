@@ -1,0 +1,159 @@
+{
+ "title": "next_generation",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_101",
+   "node": {
+    "id": "n_100",
+    "type": "terminal",
+    "text": "next_generation(world)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_75",
+   "node": {
+    "id": "n_74",
+    "type": "process",
+    "text": "y = 0"
+   }
+  },
+  {
+   "kind": "while",
+   "id": "b_84",
+   "diamond": {
+    "id": "n_85",
+    "type": "diamond",
+    "text": "y < HEIGHT"
+   },
+   "body": [
+    {
+     "kind": "simple",
+     "id": "b_77",
+     "node": {
+      "id": "n_76",
+      "type": "process",
+      "text": "x = 0"
+     }
+    },
+    {
+     "kind": "while",
+     "id": "b_80",
+     "diamond": {
+      "id": "n_81",
+      "type": "diamond",
+      "text": "x < WIDTH"
+     },
+     "body": [
+      {
+       "kind": "simple",
+       "id": "b_73",
+       "node": {
+        "id": "n_72",
+        "type": "process",
+        "text": "cell_compute_next_state(world, x, y)"
+       }
+      },
+      {
+       "kind": "simple",
+       "id": "b_79",
+       "node": {
+        "id": "n_78",
+        "type": "process",
+        "text": "x = x + 1"
+       }
+      }
+     ]
+    },
+    {
+     "kind": "simple",
+     "id": "b_83",
+     "node": {
+      "id": "n_82",
+      "type": "process",
+      "text": "y = y + 1"
+     }
+    }
+   ]
+  },
+  {
+   "kind": "simple",
+   "id": "b_89",
+   "node": {
+    "id": "n_88",
+    "type": "process",
+    "text": "y = 0"
+   }
+  },
+  {
+   "kind": "while",
+   "id": "b_98",
+   "diamond": {
+    "id": "n_99",
+    "type": "diamond",
+    "text": "y < HEIGHT"
+   },
+   "body": [
+    {
+     "kind": "simple",
+     "id": "b_91",
+     "node": {
+      "id": "n_90",
+      "type": "process",
+      "text": "x = 0"
+     }
+    },
+    {
+     "kind": "while",
+     "id": "b_94",
+     "diamond": {
+      "id": "n_95",
+      "type": "diamond",
+      "text": "x < WIDTH"
+     },
+     "body": [
+      {
+       "kind": "simple",
+       "id": "b_87",
+       "node": {
+        "id": "n_86",
+        "type": "process",
+        "text": "world[y][x] = cell_next_state(world, x, y)"
+       }
+      },
+      {
+       "kind": "simple",
+       "id": "b_93",
+       "node": {
+        "id": "n_92",
+        "type": "process",
+        "text": "x = x + 1"
+       }
+      }
+     ]
+    },
+    {
+     "kind": "simple",
+     "id": "b_97",
+     "node": {
+      "id": "n_96",
+      "type": "process",
+      "text": "y = y + 1"
+     }
+    }
+   ]
+  },
+  {
+   "kind": "simple",
+   "id": "b_103",
+   "node": {
+    "id": "n_102",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

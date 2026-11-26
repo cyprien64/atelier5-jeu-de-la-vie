@@ -1,0 +1,127 @@
+{
+ "title": "count_cells",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_219",
+   "node": {
+    "id": "n_218",
+    "type": "terminal",
+    "text": "count_cells(world, player, zone)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_198",
+   "node": {
+    "id": "n_197",
+    "type": "process",
+    "text": "count = 0"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_205",
+   "node": {
+    "id": "n_204",
+    "type": "process",
+    "text": "y = 0"
+   }
+  },
+  {
+   "kind": "while",
+   "id": "b_214",
+   "diamond": {
+    "id": "n_215",
+    "type": "diamond",
+    "text": "y < HEIGHT"
+   },
+   "body": [
+    {
+     "kind": "simple",
+     "id": "b_207",
+     "node": {
+      "id": "n_206",
+      "type": "process",
+      "text": "x = 0"
+     }
+    },
+    {
+     "kind": "while",
+     "id": "b_210",
+     "diamond": {
+      "id": "n_211",
+      "type": "diamond",
+      "text": "x < WIDTH"
+     },
+     "body": [
+      {
+       "kind": "if",
+       "id": "b_201",
+       "diamond": {
+        "id": "n_202",
+        "type": "diamond",
+        "text": "world[y][x] == player && (zone == ALL_ZONES || zone_owner(x) == zone)"
+       },
+       "junction": {
+        "id": "n_203",
+        "type": "junction",
+        "text": ""
+       },
+       "trueBranch": [
+        {
+         "kind": "simple",
+         "id": "b_200",
+         "node": {
+          "id": "n_199",
+          "type": "process",
+          "text": "count = count + 1"
+         }
+        }
+       ],
+       "falseBranch": []
+      },
+      {
+       "kind": "simple",
+       "id": "b_209",
+       "node": {
+        "id": "n_208",
+        "type": "process",
+        "text": "x = x + 1"
+       }
+      }
+     ]
+    },
+    {
+     "kind": "simple",
+     "id": "b_213",
+     "node": {
+      "id": "n_212",
+      "type": "process",
+      "text": "y = y + 1"
+     }
+    }
+   ]
+  },
+  {
+   "kind": "simple",
+   "id": "b_217",
+   "node": {
+    "id": "n_216",
+    "type": "process",
+    "text": "return count"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_221",
+   "node": {
+    "id": "n_220",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}

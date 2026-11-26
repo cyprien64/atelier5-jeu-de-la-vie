@@ -1,0 +1,95 @@
+{
+ "title": "leader",
+ "blocks": [
+  {
+   "kind": "simple",
+   "id": "b_237",
+   "node": {
+    "id": "n_236",
+    "type": "terminal",
+    "text": "leader(value1, value2)",
+    "terminalKind": "start"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_223",
+   "node": {
+    "id": "n_222",
+    "type": "process",
+    "text": "result = DRAW"
+   }
+  },
+  {
+   "kind": "if",
+   "id": "b_226",
+   "diamond": {
+    "id": "n_227",
+    "type": "diamond",
+    "text": "value1 > value2"
+   },
+   "junction": {
+    "id": "n_228",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_225",
+     "node": {
+      "id": "n_224",
+      "type": "process",
+      "text": "result = PLAYER1"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "if",
+   "id": "b_231",
+   "diamond": {
+    "id": "n_232",
+    "type": "diamond",
+    "text": "value2 > value1"
+   },
+   "junction": {
+    "id": "n_233",
+    "type": "junction",
+    "text": ""
+   },
+   "trueBranch": [
+    {
+     "kind": "simple",
+     "id": "b_230",
+     "node": {
+      "id": "n_229",
+      "type": "process",
+      "text": "result = PLAYER2"
+     }
+    }
+   ],
+   "falseBranch": []
+  },
+  {
+   "kind": "simple",
+   "id": "b_235",
+   "node": {
+    "id": "n_234",
+    "type": "process",
+    "text": "return result"
+   }
+  },
+  {
+   "kind": "simple",
+   "id": "b_239",
+   "node": {
+    "id": "n_238",
+    "type": "terminal",
+    "text": "fin",
+    "terminalKind": "end"
+   }
+  }
+ ]
+}
