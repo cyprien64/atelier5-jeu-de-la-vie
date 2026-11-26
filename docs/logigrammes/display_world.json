@@ -3,9 +3,9 @@
  "blocks": [
   {
    "kind": "simple",
-   "id": "b_175",
+   "id": "b_160",
    "node": {
-    "id": "n_174",
+    "id": "n_159",
     "type": "terminal",
     "text": "display_world(world)",
     "terminalKind": "start"
@@ -70,7 +70,7 @@
      "node": {
       "id": "n_118",
       "type": "io",
-      "text": "printf(\"%d\", x / 10)"
+      "text": "printf(\"%c\", 'A' + x)"
      }
     },
     {
@@ -90,7 +90,7 @@
    "node": {
     "id": "n_124",
     "type": "io",
-    "text": "printf(\"\\n   \")"
+    "text": "printf(\"\\n\")"
    }
   },
   {
@@ -99,137 +99,64 @@
    "node": {
     "id": "n_126",
     "type": "process",
-    "text": "x = 0"
-   }
-  },
-  {
-   "kind": "while",
-   "id": "b_137",
-   "diamond": {
-    "id": "n_138",
-    "type": "diamond",
-    "text": "x < WIDTH"
-   },
-   "body": [
-    {
-     "kind": "if",
-     "id": "b_130",
-     "diamond": {
-      "id": "n_131",
-      "type": "diamond",
-      "text": "x == HALF"
-     },
-     "junction": {
-      "id": "n_132",
-      "type": "junction",
-      "text": ""
-     },
-     "trueBranch": [
-      {
-       "kind": "simple",
-       "id": "b_129",
-       "node": {
-        "id": "n_128",
-        "type": "io",
-        "text": "printf(\" \")"
-       }
-      }
-     ],
-     "falseBranch": []
-    },
-    {
-     "kind": "simple",
-     "id": "b_134",
-     "node": {
-      "id": "n_133",
-      "type": "io",
-      "text": "printf(\"%d\", x % 10)"
-     }
-    },
-    {
-     "kind": "simple",
-     "id": "b_136",
-     "node": {
-      "id": "n_135",
-      "type": "process",
-      "text": "x = x + 1"
-     }
-    }
-   ]
-  },
-  {
-   "kind": "simple",
-   "id": "b_140",
-   "node": {
-    "id": "n_139",
-    "type": "io",
-    "text": "printf(\"\\n\")"
-   }
-  },
-  {
-   "kind": "simple",
-   "id": "b_142",
-   "node": {
-    "id": "n_141",
-    "type": "process",
     "text": "y = 0"
    }
   },
   {
    "kind": "while",
-   "id": "b_172",
+   "id": "b_157",
    "diamond": {
-    "id": "n_173",
+    "id": "n_158",
     "type": "diamond",
     "text": "y < HEIGHT"
    },
    "body": [
     {
      "kind": "simple",
-     "id": "b_144",
+     "id": "b_129",
      "node": {
-      "id": "n_143",
+      "id": "n_128",
       "type": "io",
       "text": "printf(\"%2d \", y)"
      }
     },
     {
      "kind": "simple",
-     "id": "b_146",
+     "id": "b_131",
      "node": {
-      "id": "n_145",
+      "id": "n_130",
       "type": "process",
       "text": "x = 0"
      }
     },
     {
      "kind": "while",
-     "id": "b_166",
+     "id": "b_151",
      "diamond": {
-      "id": "n_167",
+      "id": "n_152",
       "type": "diamond",
       "text": "x < WIDTH"
      },
      "body": [
       {
        "kind": "if",
-       "id": "b_149",
+       "id": "b_134",
        "diamond": {
-        "id": "n_150",
+        "id": "n_135",
         "type": "diamond",
         "text": "x == HALF"
        },
        "junction": {
-        "id": "n_151",
+        "id": "n_136",
         "type": "junction",
         "text": ""
        },
        "trueBranch": [
         {
          "kind": "simple",
-         "id": "b_148",
+         "id": "b_133",
          "node": {
-          "id": "n_147",
+          "id": "n_132",
           "type": "io",
           "text": "printf(\"|\")"
          }
@@ -239,23 +166,23 @@
       },
       {
        "kind": "if",
-       "id": "b_161",
+       "id": "b_146",
        "diamond": {
-        "id": "n_162",
+        "id": "n_147",
         "type": "diamond",
         "text": "world[y][x] == PLAYER1"
        },
        "junction": {
-        "id": "n_163",
+        "id": "n_148",
         "type": "junction",
         "text": ""
        },
        "trueBranch": [
         {
          "kind": "simple",
-         "id": "b_153",
+         "id": "b_138",
          "node": {
-          "id": "n_152",
+          "id": "n_137",
           "type": "io",
           "text": "printf(\"O\")"
          }
@@ -264,23 +191,23 @@
        "falseBranch": [
         {
          "kind": "if",
-         "id": "b_158",
+         "id": "b_143",
          "diamond": {
-          "id": "n_159",
+          "id": "n_144",
           "type": "diamond",
           "text": "world[y][x] == PLAYER2"
          },
          "junction": {
-          "id": "n_160",
+          "id": "n_145",
           "type": "junction",
           "text": ""
          },
          "trueBranch": [
           {
            "kind": "simple",
-           "id": "b_155",
+           "id": "b_140",
            "node": {
-            "id": "n_154",
+            "id": "n_139",
             "type": "io",
             "text": "printf(\"X\")"
            }
@@ -289,9 +216,9 @@
          "falseBranch": [
           {
            "kind": "simple",
-           "id": "b_157",
+           "id": "b_142",
            "node": {
-            "id": "n_156",
+            "id": "n_141",
             "type": "io",
             "text": "printf(\".\")"
            }
@@ -302,9 +229,9 @@
       },
       {
        "kind": "simple",
-       "id": "b_165",
+       "id": "b_150",
        "node": {
-        "id": "n_164",
+        "id": "n_149",
         "type": "process",
         "text": "x = x + 1"
        }
@@ -313,18 +240,18 @@
     },
     {
      "kind": "simple",
-     "id": "b_169",
+     "id": "b_154",
      "node": {
-      "id": "n_168",
+      "id": "n_153",
       "type": "io",
       "text": "printf(\"\\n\")"
      }
     },
     {
      "kind": "simple",
-     "id": "b_171",
+     "id": "b_156",
      "node": {
-      "id": "n_170",
+      "id": "n_155",
       "type": "process",
       "text": "y = y + 1"
      }
@@ -333,9 +260,9 @@
   },
   {
    "kind": "simple",
-   "id": "b_177",
+   "id": "b_162",
    "node": {
-    "id": "n_176",
+    "id": "n_161",
     "type": "terminal",
     "text": "fin",
     "terminalKind": "end"

@@ -14,8 +14,9 @@ make
 ## Règles du jeu
 
 ### Le terrain
-- Grille de 30 x 20 cases, **torique** : les bords se rejoignent.
-- Colonnes 0 à 14 : zone du joueur 1 (`O`). Colonnes 15 à 29 : zone du joueur 2 (`X`).
+- Grille de 26 x 20 cases, **torique** : les bords se rejoignent.
+- Les colonnes sont repérées par une lettre, les lignes par un numéro (ex. `K` puis `5`).
+- Colonnes A à M : zone du joueur 1 (`O`). Colonnes N à Z : zone du joueur 2 (`X`).
 - Au départ, chaque joueur a la même flotte, placée en miroir : un bloc, un clignotant et un planeur.
 
 ### Un tour

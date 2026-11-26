@@ -5,11 +5,11 @@
 
 /* ===================== Paramètres du jeu ===================== */
 
-/* Dimensions du monde : colonnes 0 à 14 = zone du joueur 1,
-   colonnes 15 à 29 = zone du joueur 2 */
-#define WIDTH 30
+/* Dimensions du monde : 26 colonnes, une par lettre de A à Z.
+   Colonnes A à M = zone du joueur 1, colonnes N à Z = zone du joueur 2 */
+#define WIDTH 26
 #define HEIGHT 20
-#define HALF (WIDTH / 2)   /* 15 : première colonne du joueur 2 */
+#define HALF (WIDTH / 2)   /* 13 : première colonne du joueur 2 (lettre N) */
 
 #define ACTIONS_PER_TURN 2
 #define WIN_POINTS 15
@@ -110,7 +110,7 @@ void cell_compute_next_state(int world[HEIGHT][WIDTH], int x, int y)
         while (dx <= 1) {
             if (dx != 0 || dy != 0) {   /* on ne compte pas la case elle-même */
                 /* Monde torique : + WIDTH évite un modulo négatif.
-                   Ex. x = 0, dx = -1 : (0 - 1 + 30) % 30 = 29, la colonne de l'autre bord. */
+                   Ex. x = 0 (A), dx = -1 : (0 - 1 + 26) % 26 = 25 (Z), la colonne de l'autre bord. */
                 nx = (x + dx + WIDTH) % WIDTH;
                 ny = (y + dy + HEIGHT) % HEIGHT;
                 /* On lit l'unité (état actuel), jamais la dizaine déjà calculée */
@@ -347,23 +347,14 @@ void display_world(int world[HEIGHT][WIDTH])
 {
     int x, y;
 
-    /* Numéros de colonnes sur 2 lignes : dizaines puis unités */
+    /* Lettres des colonnes : 'A' + x donne A pour x = 0, B pour x = 1... */
     printf("   ");
     x = 0;
     while (x < WIDTH) {
         if (x == HALF) {
             printf(" ");
         }
-        printf("%d", x / 10);
-        x = x + 1;
-    }
-    printf("\n   ");
-    x = 0;
-    while (x < WIDTH) {
-        if (x == HALF) {
-            printf(" ");
-        }
-        printf("%d", x % 10);
+        printf("%c", 'A' + x);
         x = x + 1;
     }
     printf("\n");
@@ -436,6 +427,34 @@ int read_int(const char prompt[], int min, int max)
     return value;
 }
 
+/* Lit une lettre de colonne (A à Z, majuscule ou minuscule) et renvoie
+   son numéro : A = 0, B = 1... Redemande tant que la lettre est invalide. */
+int read_column(const char prompt[])
+{
+    int x = -1;   /* valeur invalide pour entrer dans la boucle */
+    char letter;
+    int c;
+
+    while (x < 0 || x >= WIDTH) {
+        printf("%s (A-%c) : ", prompt, 'A' + WIDTH - 1);
+        /* " %c" : l'espace saute les retours à la ligne et les espaces */
+        if (scanf(" %c", &letter) != 1) {
+            printf("\nPartie interrompue.\n");
+            exit(0);
+        }
+        if (letter >= 'a' && letter <= 'z') {
+            letter = letter - 'a' + 'A';   /* minuscule -> majuscule */
+        }
+        x = letter - 'A';   /* 'C' - 'A' = 2 : la lettre devient un numéro */
+        /* On vide le reste de la ligne */
+        c = getchar();
+        while (c != '\n' && c != EOF) {
+            c = getchar();
+        }
+    }
+    return x;
+}
+
 /* ===================== Déroulement d'un tour ===================== */
 
 /* Le joueur effectue ses actions ; une action refusée ne compte pas */
@@ -462,7 +481,7 @@ void play_turn(int world[HEIGHT][WIDTH], int player, int round, int score1, int 
             if (choice == ACTION_STRUCTURE) {
                 type = read_int("Structure 0 = bloc, 1 = clignotant, 2 = planeur", 0, NB_STRUCTURES - 1);
             }
-            x = read_int("Colonne", 0, WIDTH - 1);
+            x = read_column("Colonne");
             y = read_int("Ligne", 0, HEIGHT - 1);
             if (choice == ACTION_ADD) {
                 ok = add_cell(world, player, x, y);
